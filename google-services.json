@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "414722973669",
+    "project_id": "iteration1-59614",
+    "storage_bucket": "iteration1-59614.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414722973669:android:bc9bde02fa75645bb5d90c",
+        "android_client_info": {
+          "package_name": "com.au.Iteration1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414722973669-a6d0hrnmgjhak6q0ghdpdd6rbfq11n9b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMp3VmFm3KGv5igbMSPOtX15WQq9Nko1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414722973669-a6d0hrnmgjhak6q0ghdpdd6rbfq11n9b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

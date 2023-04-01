@@ -27,6 +27,15 @@
     "web": {
       "bundler": "metro",
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsImpl": "mapbox",
+          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiaGVoZWNodWNrbGUiLCJhIjoiY2xmeHI2NHo1MDB5ZTNlbXJtbWUxOXk3ZiJ9.Mgqcf3pR-8snJqXiZQZ0_Q"
+        }
+      ]
+    ]
   }
 }

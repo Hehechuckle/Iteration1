@@ -2,11 +2,18 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
+import React, { useEffect } from 'react';
+import { FIRESTORE_DB } from '../../firebaseConfig';
+import { addDoc, collection } from 'firebase/firestore'
 
 export default function TabTwoScreen() {
+  useEffect(()=>{
+    addDoc(collection(FIRESTORE_DB, 'Animals'), {})
+  }, [])
+  
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
+      <Text style={styles.title}>MAP</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <EditScreenInfo path="app/(tabs)/two.tsx" />
     </View>
