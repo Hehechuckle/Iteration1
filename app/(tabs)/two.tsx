@@ -6,16 +6,14 @@ import React, { useEffect } from 'react';
 import { FIRESTORE_DB } from '../../firebaseConfig';
 import { addDoc, collection } from 'firebase/firestore'
 
+
 export default function TabTwoScreen() {
-  useEffect(()=>{
-    addDoc(collection(FIRESTORE_DB, 'Animals'), {})
-  }, [])
+
   
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>MAP</Text>
+      <Text style={styles.title}>Info</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
     </View>
   );
 }

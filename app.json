@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
+    "releaseChannel": "development",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -22,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.fit5120team6.Iteration1"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +38,11 @@
           "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiaGVoZWNodWNrbGUiLCJhIjoiY2xmeHI2NHo1MDB5ZTNlbXJtbWUxOXk3ZiJ9.Mgqcf3pR-8snJqXiZQZ0_Q"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "10175f7c-12a4-4c09-977e-1aab5f7be263"
+      }
+    }
   }
 }
