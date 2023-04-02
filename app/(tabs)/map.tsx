@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import MapboxGL from '@rnmapbox/maps';
+import Mapbox from '@rnmapbox/maps';
 
-MapboxGL.setAccessToken('sk.eyJ1IjoiaGVoZWNodWNrbGUiLCJhIjoiY2xmeHI2NHo1MDB5ZTNlbXJtbWUxOXk3ZiJ9.Mgqcf3pR-8snJqXiZQZ0_Q');
+Mapbox.setAccessToken('sk.eyJ1IjoiaGVoZWNodWNrbGUiLCJhIjoiY2xmeHI2NHo1MDB5ZTNlbXJtbWUxOXk3ZiJ9.Mgqcf3pR-8snJqXiZQZ0_Q');
 
 export default function TabThreeScreen() {
     return (
@@ -12,7 +12,7 @@ export default function TabThreeScreen() {
             <View style={styles.separator}/>
         </View>
         <View style={styles.mapcontainer}>
-            <MapboxGL.MapView style={styles.map} />
+            <Mapbox.MapView style={styles.map} />
         </View>
     </View>
     );
