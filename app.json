@@ -40,6 +40,7 @@
       ]
     ],
     "extra": {
+      "googleMapsApiKey": "AIzaSyCMp3VmFm3KGv5igbMSPOtX15WQq9Nko1o",
       "eas": {
         "projectId": "10175f7c-12a4-4c09-977e-1aab5f7be263"
       }
