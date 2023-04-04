@@ -1,36 +1,55 @@
-import { StyleSheet } from 'react-native';
+// import { getDocs, collection, onSnapshot } from 'firebase/firestore';
+// import { db } from '../../firebaseConfig';
+// import React, { useEffect, useState } from 'react';
+// import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+// import { StyleSheet, View, Text, TextInput, StatusBar, Button } from 'react-native';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
-import React, { useEffect } from 'react';
-import { FIRESTORE_DB } from '../../firebaseConfig';
-import { addDoc, collection } from 'firebase/firestore'
+// interface animal {
+//   id: string;
+//   name: string;
+//   year: number;
+//   latitude: number;
+//   longitude: number;
+// }
+
+// export default function App() {
+
+//   const [animalData, setAnimalData] = useState<animal[]>([]);
+
+//   useEffect(() => {
+//     const animal = collection(db, 'Test')
+//     const record = onSnapshot(animal,{
+//       next: (snapshot) => {
+//         const animalData: animal[]=[];
+//         snapshot.docs.forEach((doc) => {
+//           const data = doc.data();
+//           animalData.push({
+//             id: doc.id,
+//             name: data.vernacularName,
+//             year: data.year,
+//             latitude: data.decimalLatitude,
+//             longitude: data.decimalLongitude,
+//           });
+//         })
+//         setAnimalData(animalData)
+//       }
+//     })
+//     return () => record();
+//   },[]);
 
 
-export default function TabTwoScreen() {
+//   return (
+//     <View>
+//       { animalData.map(animal => (
+//         <Text key={animal.id}>
+//           {animal.name}
+//           {animal.latitude}
+//           {animal.longitude}
+//         </Text>
+//       ))
+//       }
+//     </View>
+//   )
+// }
 
-  
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Info</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
