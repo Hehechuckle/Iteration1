@@ -1,26 +1,19 @@
 import { ImageBackground, Image, StyleSheet } from 'react-native';
 import { Text, View } from '../../components/Themed';
 
-// function QuarterCircle() {
-//   return (
-//     <View style={styles.quarterCircle}>
-//       <View style={styles.quarterCircleInner} />
-//     </View>
-//   );
-// }
 
 export default function TabOneScreen() {
   return (
-    <View style={styles.background}>
-      <Image style={styles.image} source={require('../../assets/images/koala.png')} />
-      {/* <QuarterCircle /> */}
-      <View style={styles.container}>
-        <Text style={styles.title}>Wildlife Mapper</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <Text style={styles.text}>What do you know about the</Text>
-        <Text style={styles.text}>native animal</Text>
-        <Image source={require('../../assets/images/koala.png')}/>
-      </View>
+
+    <View style={styles.container}>
+      <Image
+        source={require('../../assets/images/koala.png')}
+        style={styles.image}
+      />
+      <Text style={styles.title}>Wildlife Mapper</Text>
+      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <Text style={styles.text}>What do you know about the</Text>
+      <Text style={styles.text}>native animal</Text>
     </View>
   );
 }
@@ -30,35 +23,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
+    width: 150, 
+    height: 150, 
     position: 'absolute',
-    // top: 0,
-    // left: 0,
-    // bottom: 0,
-    // right: 0,
-    resizeMode: 'cover',
+    top: 0,
+    right: 0,
   },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  quarterCircle: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    width: 100,
-    height: 100,
-    backgroundColor: 'transparent',
-    borderTopLeftRadius: 100,
-  },
-  quarterCircleInner: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    width: 100,
-    height: 100,
-    borderTopLeftRadius: 100,
-    backgroundColor: 'purple',
   },
   title: {
     fontSize: 30,
