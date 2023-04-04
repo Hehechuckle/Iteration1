@@ -6,46 +6,41 @@ import * as Location from 'expo-location';
 import { getDocs, collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 
+interface animal {
+  id: string;
+  name: string;
+  year: number;
+  latitude: number;
+  longitude: number;
+}
+
 export default function App() {
   const mapRef = React.useRef(null);
 
   const [region, setRegion] = React.useState();
 
+  const [animalData, setAnimalData] = useState<animal[]>([]);
 
-  // interface Animal {
-  //   id: string;
-  //   name: string;
-  //   year: number;
-  //   latitude: number;
-  //   longitude: number;
-  // }
-
-  // const [animalData, setAnimalData] = useState<Animal[]>([]);
-
-  // useEffect(() => {
-  //     const getRecord = onSnapshot(collection(db, 'Poor'), (querySnapshot) => {
-  //         const Animals: Animal[] = [];
-          
-  //         querySnapshot.forEach((doc) => {
-  //             const data = doc.data();
-  //             Animals.push({
-  //                 id: doc.id,
-  //                 name: data.vernacularName,
-  //                 year: data.year,
-  //                 latitude: data.decimalLatitude,
-  //                 longitude: data.decimalLongitude,
-  //             });
-  //         });
-  //         setAnimalData(Animals);
-  //     });
-  //     return () => getRecord();
-  // }, []);
-
-  // const [selectedAnimal, setSelectedAnimal] = useState<Animal | null>(null);
-
-  // const handleAnnotationPress = (animal: Animal) => {
-  //     setSelectedAnimal(animal);
-  // };
+  useEffect(() => {
+    const animal = collection(db, 'Test')
+    const record = onSnapshot(animal,{
+      next: (snapshot) => {
+        const animalData: animal[]=[];
+        snapshot.docs.forEach((doc) => {
+          const data = doc.data();
+          animalData.push({
+            id: doc.id,
+            name: data.vernacularName,
+            year: data.year,
+            latitude: data.decimalLatitude,
+            longitude: data.decimalLongitude,
+          });
+        })
+        setAnimalData(animalData)
+      }
+    })
+    return () => record();
+  },[]);
 
   useEffect(() => {
     const getPermission = async () => {
@@ -94,7 +89,7 @@ export default function App() {
           mapRef.current.animateToRegion(newRegion, 1000);
         }}
         query={{
-          key: 'AIzaSyCMp3VmFm3KGv5igbMSPOtX15WQq9Nko1o' ,
+          key: 'AIzaSyCMp3VmFm3KGv5igbMSPOtX15WQq9Nko1o',
           language: 'en',
           location: `${region.latitude},${region.longitude}`,
         }}
@@ -105,36 +100,27 @@ export default function App() {
       />
 
       <MapView
+        provider={PROVIDER_GOOGLE}
         ref={mapRef}
         style={styles.map}
         initialRegion={region}
       >
         <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }} />
 
-        {/* {wildlifeRecords.map((record) => (
-        <Marker
-          key={record.id}
-          coordinate={{
-            latitude: record.latitude,
-            longitude: record.longitude,
-          }}
-        >
-        <Callout>
-          <Text>{record.vernacularName} - {record.year}</Text>
-          </Callout>
-        </Marker>
-        ))} */}
-
-        {/* <Marker
-          coordinate={{
-            latitude: -37.8136,
-            longitude: 144.9631,
-          }}>
-          <Callout>
-            <Text>Koala</Text>
-          </Callout>
-        </Marker> */}
-        
+        {animalData.map((animal) => (
+          <Marker
+            key={animal.id}
+            coordinate={{
+              latitude: animal.latitude,
+              longitude: animal.longitude,
+            }}
+          >
+            <Callout>
+              <Text>{animal.name}</Text>
+              <Text>Year: {animal.year}</Text>
+            </Callout>
+          </Marker>
+        ))}
       </MapView>
     </View>
   );

@@ -48,17 +48,17 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="map"
         options={{
           title: 'Map',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
-      />
+      /> */}
       <Tabs.Screen
-        name="test"
+        name="test1"
         options={{
-          title: 'test',
+          title: 'test1',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />

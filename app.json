@@ -19,13 +19,22 @@
     "ios": {
       "supportsTablet": true
     },
+
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.fit5120team6.Iteration1"
+      
+      "package": "com.fit5120team6.Iteration1",
+
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDyjo2SZv3vcPuxZWml-6xq1xziXfHTWig"
+        }
+      }
     },
+
     "web": {
       "bundler": "metro",
       "favicon": "./assets/images/favicon.png"
