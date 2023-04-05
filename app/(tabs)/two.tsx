@@ -1,55 +1,72 @@
-// import { getDocs, collection, onSnapshot } from 'firebase/firestore';
-// import { db } from '../../firebaseConfig';
-// import React, { useEffect, useState } from 'react';
-// import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-// import { StyleSheet, View, Text, TextInput, StatusBar, Button } from 'react-native';
+import React from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { Link, Tabs } from 'expo-router';
 
-// interface animal {
-//   id: string;
-//   name: string;
-//   year: number;
-//   latitude: number;
-//   longitude: number;
-// }
+export default function TabTwoScreen() {
+  return (
+    <View style={styles.container}>
+      <View style={styles.row}>
+        <Link href="/koala" style={styles.link}>
+          <Text style={styles.linkText}>koala</Text>
+        </Link>
+        <Image source={require('../../assets/images/koala.png')} style={styles.image} />
+      </View>
+      <View style={styles.verticalSpacer} />
+      <View style={styles.row}>
+        <Link href="/kangaroo" style={styles.link}>
+          <Text style={styles.linkText}>kangaroo</Text>
+        </Link>
+        <Image source={require('../../assets/images/kangaroo.png')} style={styles.image} />
+      </View>
+    </View>
+  );
+}
 
-// export default function App() {
-
-//   const [animalData, setAnimalData] = useState<animal[]>([]);
-
-//   useEffect(() => {
-//     const animal = collection(db, 'Test')
-//     const record = onSnapshot(animal,{
-//       next: (snapshot) => {
-//         const animalData: animal[]=[];
-//         snapshot.docs.forEach((doc) => {
-//           const data = doc.data();
-//           animalData.push({
-//             id: doc.id,
-//             name: data.vernacularName,
-//             year: data.year,
-//             latitude: data.decimalLatitude,
-//             longitude: data.decimalLongitude,
-//           });
-//         })
-//         setAnimalData(animalData)
-//       }
-//     })
-//     return () => record();
-//   },[]);
-
-
-//   return (
-//     <View>
-//       { animalData.map(animal => (
-//         <Text key={animal.id}>
-//           {animal.name}
-//           {animal.latitude}
-//           {animal.longitude}
-//         </Text>
-//       ))
-//       }
-//     </View>
-//   )
-// }
-
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  verticalSpacer: {
+    height: 20,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  row: {
+    flexDirection: 'row',
+    backgroundColor: '#FFFFCC',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 350,
+    height: 100,
+    borderRadius: 60,
+  },
+  link: {
+    flex: 1, 
+    alignItems: 'center', 
+    borderRadius: 70,
+    paddingVertical: 30,
+    paddingHorizontal: 30
+  },
+  linkText: {
+    fontSize: 25,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  image: {
+    width: 150,
+    height: 100,
+    resizeMode: 'cover',
+    borderRadius: 60,
+    marginLeft: 10,
+  },
+  text: {
+    fontSize: 20,
+    color: 'purple',
+    textAlign: 'center',
+  },
+});
