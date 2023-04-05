@@ -13,7 +13,7 @@ export default function KoalaInfoScreen() {
         is an arboreal herbivorous marsupial native to Australia. 
         It is the only extant representative of the family Phascolarctidae 
         and its closest living relatives are the wombats.</Text>
-
+        <View style={styles.verticalSpacer} />
         <Button onPress={()=> router.back()} title= "Go Back" />
 
         </View>
@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  verticalSpacer: {
+    height: 20,
   },
   container1: {
     alignItems: 'center',

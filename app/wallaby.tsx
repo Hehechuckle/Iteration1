@@ -7,12 +7,14 @@ export default function KoalaInfoScreen() {
     const router = useRouter();
     return (
         <View style={styles.container}>
-        <Text style={styles.title}>Kangaroo</Text>
-        <Image source={require('../assets/images/kangaroo.png')} style={styles.image} />
-        <Text style={styles.text}>kangaroo are four marsupials from the family Macropodidae. In common use 
-        the term is used to describe the largest species from this family, the red kangaroo, 
-        as well as the antilopine kangaroo, eastern grey kangaroo, and western grey kangaroo. 
-        Kangaroos are indigenous to Australia and New Guinea.</Text>
+        <Text style={styles.title}>Wallaby</Text>
+        <Image source={require('../assets/images/wallaby.png')} style={styles.image} />
+        <Text style={styles.text}>A wallaby is a small or middle-sized macropod native to
+         Australia and New Guinea, with introduced populations in New Zealand Hawaii, the
+         United Kingdom and other countries. They belong to the same taxonomic family as 
+         kangaroos and sometimes the same genus, but kangaroos are specifically categorised
+         into the four largest species of the family.
+        </Text>
         <View style={styles.verticalSpacer} />
         <Button onPress={()=> router.back()} title= "Go Back" />
 

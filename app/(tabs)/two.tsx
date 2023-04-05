@@ -7,16 +7,23 @@ export default function TabTwoScreen() {
     <View style={styles.container}>
       <View style={styles.row}>
         <Link href="/koala" style={styles.link}>
-          <Text style={styles.linkText}>koala</Text>
+          <Text style={styles.linkText}>Koala</Text>
         </Link>
         <Image source={require('../../assets/images/koala.png')} style={styles.image} />
       </View>
       <View style={styles.verticalSpacer} />
       <View style={styles.row}>
         <Link href="/kangaroo" style={styles.link}>
-          <Text style={styles.linkText}>kangaroo</Text>
+          <Text style={styles.linkText}>Kangaroo</Text>
         </Link>
         <Image source={require('../../assets/images/kangaroo.png')} style={styles.image} />
+      </View>
+      <View style={styles.verticalSpacer} />
+      <View style={styles.row}>
+        <Link href="/wallaby" style={styles.link}>
+          <Text style={styles.linkText}>Wallaby</Text>
+        </Link>
+        <Image source={require('../../assets/images/wallaby.png')} style={styles.image} />
       </View>
     </View>
   );
