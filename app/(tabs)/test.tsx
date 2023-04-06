@@ -215,3 +215,12 @@
 //     fontWeight: 'bold',
 //   },
 // });
+
+
+
+
+      {/* <View style={styles.container1}>
+        <Link href="/map" style={styles.link}>
+          <Text style={styles.linkText}>Get Start</Text>
+        </Link>
+      </View> */}

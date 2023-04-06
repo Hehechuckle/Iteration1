@@ -9,10 +9,10 @@ export default function KoalaInfoScreen() {
         <View style={styles.container}>
         <Text style={styles.title}>Kangaroo</Text>
         <Image source={require('../assets/images/kangaroo.png')} style={styles.image} />
-        <Text style={styles.text}>kangaroo are four marsupials from the family Macropodidae. In common use 
-        the term is used to describe the largest species from this family, the red kangaroo, 
-        as well as the antilopine kangaroo, eastern grey kangaroo, and western grey kangaroo. 
-        Kangaroos are indigenous to Australia and New Guinea.</Text>
+        <Text style={styles.text}>Kangaroos are incredible animals known for their strong legs that allow them to jump amazing distances.
+         They're the only large animals that get around mainly by hopping! Kangaroos are plant-eaters and enjoy snacking on grasses,
+          leaves, and fruits. They're social animals and hang out in groups called mobs. You can find kangaroos in a variety of habitats,
+           such as grasslands, forests, and deserts.</Text>
         <View style={styles.verticalSpacer} />
         <Button onPress={()=> router.back()} title= "Go Back" />
 

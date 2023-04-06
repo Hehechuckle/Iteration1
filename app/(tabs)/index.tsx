@@ -1,5 +1,6 @@
-import { ImageBackground, Image, StyleSheet } from 'react-native';
-import { Text, View } from '../../components/Themed';
+import { ImageBackground, Image, StyleSheet, Button } from 'react-native';
+import { Text, View} from '../../components/Themed';
+import { Link, Tabs, useRouter } from 'expo-router';
 
 
 export default function TabOneScreen() {
@@ -15,21 +16,27 @@ export default function TabOneScreen() {
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Text style={styles.text}>What do you know about the</Text>
       <Text style={styles.text}>native animal</Text>
+      <View style={styles.verticalSpacer} />
+      <View style={styles.buttonContainer}>
+        <Link href="/map" style={styles.link}>
+          <Text style={styles.linkText}>Get Start</Text>
+        </Link>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   image: {
-    width: 200, 
-    height: 200, 
+    width: 180, 
+    height: 180, 
     position: 'absolute',
     borderBottomLeftRadius: 200, 
     top: 0,
     right: 0,
   },
   imageContainer: {
-    backgroundColor: '#add8e6', 
+    backgroundColor: '#FFFFCC', 
     borderTopRightRadius: 0, 
     borderBottomRightRadius: 0, 
     borderBottomLeftRadius: 210, 
@@ -44,7 +51,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFFFCC', 
+    backgroundColor: 'white', 
+  },
+  buttonContainer: {
+    backgroundColor: '#FFFFCC',
+    borderRadius: 20,
+    width: 150, 
+    height: 60,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    textAlign: 'center',
   },
   title: {
     fontSize: 30,
@@ -61,6 +79,22 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
+  },
+  verticalSpacer: {
+    height: 100,
+  },
+  link: {
+    flex: 1, 
+    alignItems: 'center', 
+    borderRadius: 70,
+    paddingVertical: 15,
+    paddingHorizontal: 30
+  },
+  linkText: {
+    fontSize: 20,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
 });
 

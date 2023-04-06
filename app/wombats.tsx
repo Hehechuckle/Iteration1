@@ -7,13 +7,11 @@ export default function KoalaInfoScreen() {
     const router = useRouter();
     return (
         <View style={styles.container}>
-        <Text style={styles.title}>Platypus</Text>
-        <Image source={require('../assets/images/platypus.png')} style={styles.image} />
-        <Text style={styles.text}> Platypus are unique animals that have an unusual appearance, combining features 
-        from different animals. They have a bill like a duck, webbed feet like an otter, and fur covering their body
-        like a mammal. One of the most unusual things about platypus is that they can lay eggs, which is rare for a
-        mammal. Platypus live in rivers and streams and are excellent swimmers, thanks to their webbed feet. They
-        feed on small aquatic animals like insects, crustaceans, and fish.
+        <Text style={styles.title}>Wombats</Text>
+        <Image source={require('../assets/images/wombats.png')} style={styles.image} />
+        <Text style={styles.text}>Wombats are cool animals that are known for their strength and digging abilities.
+         They live in burrows, which are tunnels in the ground that they dig with their powerful legs and claws. Wombats
+         are mostly active at night and can be found in different types of habitats, such as forests, grasslands, and deserts.
         </Text>
         <View style={styles.verticalSpacer} />
         <Button onPress={()=> router.back()} title= "Go Back" />
