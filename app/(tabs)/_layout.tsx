@@ -57,6 +57,13 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="info" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="record"
+        options={{
+          title: 'record',
+          tabBarIcon: ({ color }) => <TabBarIcon name="camera" color={color} />,
+        }}
+      />
     </Tabs>
   );
 }

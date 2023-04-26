@@ -8,6 +8,7 @@ import { db } from '../../firebaseConfig';
 import { MaterialIcons } from '@expo/vector-icons';
 import MapViewDirections from 'react-native-maps-directions';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { Link, Tabs } from 'expo-router';
 
 
 interface animal {
@@ -64,8 +65,9 @@ export default function App() {
             <Text style={styles.mesText}>
               Take only photos, leave only footprints.
             </Text>
+            <View style={styles.verticalSpacer} />
             <TouchableOpacity
-              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+              style={{ ...styles.openButton, backgroundColor: "#21C392" }}
               onPress={onSafetyMessageDismiss}
             >
               <Text style={styles.textStyle}>OK</Text>
@@ -269,14 +271,14 @@ export default function App() {
 
       <View style={{
         position: 'absolute',
-        bottom: 0,
+        bottom: 18,
         backgroundColor: '#171717',
         paddingHorizontal: 15,
         borderRadius: 20,
         zIndex: 1,
         width: '75%', 
-        marginRight: '20%', 
-        marginLeft: '5%', 
+        marginRight: '23%', 
+        marginLeft: '2%', 
       }}>
         <DropDownPicker
           open={open}
@@ -358,7 +360,9 @@ export default function App() {
             />
             <Callout style={styles.calloutContainer}>
               <Text style={styles.calloutText}>{animal.name}</Text>
-              <Text style={styles.calloutSubText}>Date: {animal.date}</Text>
+              <Text style={styles.calloutSubText1}>{animal.sciname}</Text>
+              <Text style={styles.calloutSubText}>Seen on: {animal.date}</Text>
+              <Text style={styles.calloutSubText}>{animal.fact}</Text>
             </Callout>
           </Marker>
         ))}
@@ -425,6 +429,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
   },
+  calloutSubText1: {
+    fontSize: 10,
+    color: '#666',
+    fontStyle: 'italic',
+  },
   calloutContainer: {
     width: 200, 
     hight: 100,
@@ -454,10 +463,12 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    margin: 20,
+    margin: 18,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: 33,
+    borderColor: "#21C392",
+    borderWidth: 4,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -469,7 +480,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   openButton: {
-    backgroundColor: "#F194FF",
+    width: 80,
     borderRadius: 20,
     padding: 10,
     elevation: 2,
@@ -478,19 +489,24 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+    fontSize: 19,
   },
   modalText: {
-    marginBottom: 15,
+    marginBottom: 10,
     textAlign: "center",
     fontWeight: "bold",
-    fontSize: 25,
+    fontSize: 15,
   },
   mesText: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: 13,
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 185,
+    height: 160,
+    marginBottom: 10,
+  },
+  verticalSpacer: {
+    height: 20,
   },
 });
