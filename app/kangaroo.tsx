@@ -29,13 +29,6 @@ const styles = StyleSheet.create({
   verticalSpacer: {
     height: 20,
   },
-  container1: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFFFCC', 
-    width: 200, 
-    height: 100,
-  },
   title: {
     fontSize: 30,
     fontWeight: 'bold',

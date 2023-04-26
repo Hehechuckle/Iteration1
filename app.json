@@ -1,58 +1,58 @@
-{
-  "expo": {
-    "name": "Iteration1",
-    "slug": "Iteration1",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+  {
+    "expo": {
+      "name": "Iteration1",
+      "slug": "Iteration1",
+      "version": "1.0.0",
+      "orientation": "portrait",
+      "icon": "./assets/images/icon.png",
+      "scheme": "myapp",
+      "userInterfaceStyle": "automatic",
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "resizeMode": "contain",
         "backgroundColor": "#ffffff"
       },
-      
-      "package": "com.fit5120team6.Iteration1",
+      "assetBundlePatterns": [
+        "**/*"
+      ],
+      "ios": {
+        "supportsTablet": true
+      },
 
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyDyjo2SZv3vcPuxZWml-6xq1xziXfHTWig"
+      "android": {
+        "adaptiveIcon": {
+          "foregroundImage": "./assets/images/adaptive-icon.png",
+          "backgroundColor": "#ffffff"
         },
-        "googleMapsApiKey": "AIzaSyDyjo2SZv3vcPuxZWml-6xq1xziXfHTWig"
-      }
-    },
+        
+        "package": "com.fit5120team6.Iteration1",
 
-    "web": {
-      "bundler": "metro",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      [
-        "@rnmapbox/maps",
-        {
-          "RNMapboxMapsImpl": "mapbox",
-          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiaGVoZWNodWNrbGUiLCJhIjoiY2xmeHI2NHo1MDB5ZTNlbXJtbWUxOXk3ZiJ9.Mgqcf3pR-8snJqXiZQZ0_Q"
+        "config": {
+          "googleMaps": {
+            "apiKey": "AIzaSyDyjo2SZv3vcPuxZWml-6xq1xziXfHTWig"
+          },
+          "googleMapsApiKey": "AIzaSyDyjo2SZv3vcPuxZWml-6xq1xziXfHTWig"
         }
-      ]
-    ],
-    "extra": {
-      "googleMapsApiKey": "AIzaSyCMp3VmFm3KGv5igbMSPOtX15WQq9Nko1o",
-      "eas": {
-        "projectId": "10175f7c-12a4-4c09-977e-1aab5f7be263"
+      },
+
+      "web": {
+        "bundler": "metro",
+        "favicon": "./assets/images/favicon.png"
+      },
+      "plugins": [
+        [
+          "@rnmapbox/maps",
+          {
+            "RNMapboxMapsImpl": "mapbox",
+            "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiaGVoZWNodWNrbGUiLCJhIjoiY2xmeHI2NHo1MDB5ZTNlbXJtbWUxOXk3ZiJ9.Mgqcf3pR-8snJqXiZQZ0_Q"
+          }
+        ]
+      ],
+      "extra": {
+        "googleMapsApiKey": "AIzaSyCMp3VmFm3KGv5igbMSPOtX15WQq9Nko1o",
+        "eas": {
+          "projectId": "10175f7c-12a4-4c09-977e-1aab5f7be263"
+        }
       }
     }
   }
-}

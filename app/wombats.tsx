@@ -8,7 +8,7 @@ export default function KoalaInfoScreen() {
     return (
         <View style={styles.container}>
         <Text style={styles.title}>Wombats</Text>
-        <Image source={require('../assets/images/wombats.png')} style={styles.image} />
+        <Image source={require('../assets/images/icon/wombat.png')} style={styles.image} />
         <Text style={styles.text}>Wombats are cool animals that are known for their strength and digging abilities.
          They live in burrows, which are tunnels in the ground that they dig with their powerful legs and claws. Wombats
          are mostly active at night and can be found in different types of habitats, such as forests, grasslands, and deserts.

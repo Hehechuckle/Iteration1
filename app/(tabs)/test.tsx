@@ -1,18 +1,23 @@
 // import React, { useEffect, useState } from 'react';
-// import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+// import MapView, { Callout, CalloutSubview, Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
 // import { StyleSheet, View, Text, TextInput, StatusBar, Button, TouchableOpacity, Image} from 'react-native';
 // import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 // import * as Location from 'expo-location';
 // import { getDocs, collection, onSnapshot } from 'firebase/firestore';
 // import { db } from '../../firebaseConfig';
 // import { MaterialIcons } from '@expo/vector-icons';
+// import MapViewDirections from 'react-native-maps-directions';
+// import DropDownPicker from 'react-native-dropdown-picker';
+
 
 // interface animal {
 //   id: string;
 //   name: string;
-//   year: number;
+//   sciname: string;
+//   date: string;
 //   latitude: number;
 //   longitude: number;
+//   fact: string;
 // }
 
 // export default function App() {
@@ -23,6 +28,51 @@
 //   const [animalData, setAnimalData] = useState<animal[]>([]);
 
 //   const [recenteredLocation, setRecenteredLocation] = useState(null);
+
+//   const [searchedLocation, setSearchedLocation] = useState(null);
+
+//   const [showDirections, setShowDirections] = useState(false);
+
+//   const [searchedLocationDetails, setSearchedLocationDetails] = useState(null);
+
+//   const [displayDirections, setDisplayDirections] = useState(false);
+
+//   const [open, setOpen] = useState(false);
+//   const [value, setValue] = useState(['koala', 'Eastern Grey Kangaroo', 'Swamp Wallaby', 'Common Wombat', 'Short-beaked Echidna', 'Platypus']);
+//   const [items, setItems] = useState([
+//     { label: 'Koala', value: 'koala' },
+//     { label: 'Kangaroo', value: 'Eastern Grey Kangaroo' },
+//     { label: 'Wallaby', value: 'Swamp Wallaby' },
+//     { label: 'Wombat', value: 'Common Wombat' },
+//     { label: 'Echidnas', value: 'Short-beaked Echidna' },
+//     { label: 'Platypus', value: 'Platypus' },
+//   ]);
+
+//   const cancelSearch = () => {
+//     setSearchedLocation(null);
+//     setShowDirections(false);
+//     setDisplayDirections(false);
+//     reCenterMap();
+//   };
+
+//   const getAnimalIcon = (animalName: string) => {
+//     switch (animalName) {
+//       case 'koala':
+//         return require('../../assets/images/icon/koala.png');
+//       case 'Eastern Grey Kangaroo':
+//         return require('../../assets/images/icon/kangaroo.png');
+//       case 'Platypus':
+//         return require('../../assets/images/icon/platypus.png');
+//       case 'Short-beaked Echidna':
+//         return require('../../assets/images/icon/echidna.png');
+//       case 'Swamp Wallaby':
+//         return require('../../assets/images/icon/wallaby.png');
+//       case 'Common Wombat':
+//         return require('../../assets/images/icon/wombat.png');
+//       default:
+//         return require('../../assets/images/icon/koala.png');
+//     }
+//   };
 
 //   const reCenterMap = async () => {
 //     let currentLocation = await Location.getCurrentPositionAsync({});
@@ -36,11 +86,13 @@
 //       latitude: currentLocation.coords.latitude,
 //       longitude: currentLocation.coords.longitude,
 //     });
-//     mapRef.current.animateToRegion(newRegion, 1000);
+//     if (mapRef.current) {
+//       mapRef.current.animateToRegion(newRegion, 1000);
+//     }
 //   };
 
 //   useEffect(() => {
-//     const animal = collection(db, 'Test')
+//     const animal = collection(db, 'Animals2.2')
 //     const record = onSnapshot(animal,{
 //       next: (snapshot) => {
 //         const animalData: animal[]=[];
@@ -48,10 +100,12 @@
 //           const data = doc.data();
 //           animalData.push({
 //             id: doc.id,
-//             name: data.vernacularName,
-//             year: data.year,
-//             latitude: data.decimalLatitude,
-//             longitude: data.decimalLongitude,
+//             name: data.name,
+//             sciname: data.sciname,
+//             date: data.date,
+//             latitude: data.latitude,
+//             longitude: data.longitude,
+//             fact: data.fact,
 //           });
 //         })
 //         setAnimalData(animalData)
@@ -68,19 +122,18 @@
 //         return;
 //       }
 //       let currentLocation = await Location.getCurrentPositionAsync({});
-//       // console.log("Location");
-//       // console.log(currentLocation.coords.latitude);
-//       // console.log(currentLocation.coords.longitude);
-
+  
 //       setRegion({
 //         latitude: currentLocation.coords.latitude,
 //         longitude: currentLocation.coords.longitude,
 //         latitudeDelta: 0.0922,
 //         longitudeDelta: 0.0421,
 //       });
+  
+//       reCenterMap();
 //     };
 //     getPermission();
-//   }, [])
+//   }, []);
 
 //   if (!region) {
 //     return <Text>Loading...</Text>;
@@ -96,14 +149,23 @@
 //         }}
 //         onPress={(data, details = null) => {
 //           // console.log(data, details);
+//           setSearchedLocationDetails(details);
+
 //           const newRegion = {
 //             latitude: details.geometry.location.lat,
 //             longitude: details.geometry.location.lng,
 //             latitudeDelta: 0.0922,
 //             longitudeDelta: 0.0421,
 //           };
+//           setSearchedLocation({
+//             latitude: details.geometry.location.lat,
+//             longitude: details.geometry.location.lng,
+//           });
 //           setRegion(newRegion);
 //           mapRef.current.animateToRegion(newRegion, 1000);
+
+//           setShowDirections(true);
+
 //         }}
 //         query={{
 //           key: 'AIzaSyCMp3VmFm3KGv5igbMSPOtX15WQq9Nko1o',
@@ -142,7 +204,48 @@
 //             borderColor: '#ccc', 
 //           },
 //         }}
+//         renderLeftButton={() => (
+//           <TouchableOpacity
+//             style={{
+//               justifyContent: 'center',
+//               alignItems: 'center',
+//               paddingHorizontal: 10,
+//             }}
+//             onPress={cancelSearch}
+//           >
+//             <MaterialIcons name="arrow-back" size={24} color="black" />
+//           </TouchableOpacity>
+//         )}
 //       />
+
+//       <View style={{
+//         position: 'absolute',
+//         bottom: 0,
+//         backgroundColor: '#171717',
+//         paddingHorizontal: 15,
+//         borderRadius: 20,
+//         zIndex: 1,
+//         width: '75%', 
+//         marginRight: '20%', 
+//         marginLeft: '5%', 
+//       }}>
+//         <DropDownPicker
+//           open={open}
+//           value={value}
+//           items={items}
+//           setOpen={setOpen}
+//           setValue={setValue}
+//           setItems={setItems}
+          
+//           maxHeight={500}
+//           dropDownDirection='AUTO'
+
+//           theme="DARK"
+//           multiple={true}
+//           mode="BADGE"
+//           badgeDotColors={["#e76f51", "#00b4d8", "#e9c46a", "#e76f51", "#8ac926", "#00b4d8", "#e9c46a"]}
+//         />
+//       </View>
 
 //       <MapView
 //         provider={PROVIDER_GOOGLE}
@@ -150,9 +253,50 @@
 //         style={styles.map}
 //         initialRegion={region}
 //       >
-//         <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }} />
+//         {recenteredLocation && (
+//           <Marker
+//             coordinate={{
+//               latitude: recenteredLocation.latitude,
+//               longitude: recenteredLocation.longitude,
+//             }}
+//           >
+//             <Image
+//               source={require('../../assets/images/icon/location2.png')}
+//               style={{ height: 50, width: 50 }}
+//               resizeMode="contain"
+//             />
+//           </Marker>
+//         )}
 
-//         {animalData.map((animal) => (
+//         {searchedLocation && (
+//           <Marker
+//             coordinate={{
+//               latitude: searchedLocation.latitude,
+//               longitude: searchedLocation.longitude,
+//             }}
+//             onPress={() => {
+//               setShowDirections(true);
+//               setDisplayDirections(true);
+//             }}
+//           >
+//             <Image
+//               source={require('../../assets/images/icon/location.png')}
+//               style={{ height: 50, width: 50 }}
+//               resizeMode="contain"
+//             />
+//             <Callout tooltip>
+//               <View style={styles.customCallout}>
+//                 <Text style={styles.calloutText}>{searchedLocationDetails.name}</Text>
+//                 <Text style={styles.calloutSubText}>{searchedLocationDetails.formatted_address}</Text>
+//               </View>
+//             </Callout>
+//           </Marker>
+//         )}
+
+
+//         {animalData
+//           .filter((animal) => value.includes(animal.name))
+//           .map((animal) => (
 //           <Marker
 //             key={animal.id}
 //             coordinate={{
@@ -160,20 +304,31 @@
 //               longitude: animal.longitude,
 //             }}
 //           >
-//             <Callout>
-//               <Text>{animal.name}</Text>
-//               <Text>Year: {animal.year}</Text>
+//             <Image
+//               source={getAnimalIcon(animal.name)}
+//               style={{ height: 30, width: 30 }}
+//               resizeMode="contain"
+//             />
+//             <Callout style={styles.calloutContainer}>
+//               <Text style={styles.calloutText}>{animal.name}</Text>
+//               <Text style={styles.calloutSubText}>Date: {animal.date}</Text>
 //             </Callout>
-//           </Marker>
+//           </Marker> 
 //         ))}
-//         {recenteredLocation && (
-//           <Marker
-//             coordinate={{
-//               latitude: recenteredLocation.latitude,
-//               longitude: recenteredLocation.longitude,
+
+//         {recenteredLocation && showDirections && displayDirections && (
+//           <MapViewDirections
+//             origin={recenteredLocation}
+//             destination={{
+//               latitude: region.latitude,
+//               longitude: region.longitude,
 //             }}
+//             apikey="AIzaSyCMp3VmFm3KGv5igbMSPOtX15WQq9Nko1o"
+//             strokeWidth={5}
+//             strokeColor="blue"
 //           />
 //         )}
+
 //       </MapView>
 
 //       <TouchableOpacity
@@ -198,7 +353,7 @@
 //   },
 //   reCenterButton: {
 //     position: 'absolute',
-//     bottom: 20,
+//     bottom: 80,
 //     right: 20,
 //     backgroundColor: 'white',
 //     borderRadius: 50,
@@ -214,13 +369,35 @@
 //     color: 'white',
 //     fontWeight: 'bold',
 //   },
+//   calloutText: {
+//     fontSize: 14,
+//     color: '#333',
+//     fontWeight: 'bold',
+//   },
+//   calloutSubText: {
+//     fontSize: 12,
+//     color: '#666',
+//   },
+//   calloutContainer: {
+//     width: 200, 
+//     hight: 100,
+//     borderRadius: 20,
+//   },
+//   directionsButton: {
+//     backgroundColor: 'blue',
+//     paddingHorizontal: 10,
+//     paddingVertical: 5,
+//     borderRadius: 5,
+//     marginTop: 5,
+//   },
+//   directionsButtonText: {
+//     color: 'white',
+//     fontWeight: 'bold',
+//   },
+//   customCallout: {
+//     backgroundColor: 'white',
+//     borderRadius: 10,
+//     padding: 10,
+//     width: 250,
+//   },
 // });
-
-
-
-
-      {/* <View style={styles.container1}>
-        <Link href="/map" style={styles.link}>
-          <Text style={styles.linkText}>Get Start</Text>
-        </Link>
-      </View> */}
