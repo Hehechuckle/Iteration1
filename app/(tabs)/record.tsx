@@ -13,6 +13,7 @@ import axios from 'axios';
 import google_api_key from '../../key/google_api_key';
 
 
+
 import { useEffect, useState } from 'react';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { TextInput, StatusBar, TouchableOpacity} from 'react-native';
@@ -47,9 +48,9 @@ const styles = StyleSheet.create({
 
 	getStartedText: {
         fontWeight: 'bold',
-        fontSize: 25,
+        fontSize: 23,
         textAlign: 'center',
-        padding: 16,
+        padding: 10,
         color: 'black'
 	},
 
@@ -110,30 +111,48 @@ const styles = StyleSheet.create({
     },
 
 	map: {
-		width: '100%',
-		height: '100%',
-	  },
+		height: 230,
+		width: '92%', 
+        marginLeft: '4%', 
+        marginRight: '4%', 
+		top: 570,
+		position: 'absolute',
+	},
 	
 });
-
 
 
 export default class App extends React.Component {
 	state = {
 		image: null,
 		uploading: false,
-		googleResponse: null as { responses: { labelAnnotations: { description: string }[] }[] } | null,
-		//googleResponse: null
-	};
-
+		googleResponse: null as { responses: { labelAnnotations?: { description: string }[], localizedObjectAnnotations?: { name: string, score: number }[] }[] } | null,
+		location: null,
+  		region: null,
+	  };
+	  
 	async componentDidMount() {
 		await Camera.requestCameraPermissionsAsync();
 		await MediaLibrary.requestPermissionsAsync();
 		await ImagePicker.requestCameraPermissionsAsync();
+
+		let { status } = await Location.requestForegroundPermissionsAsync();
+		if (status === "granted") {
+			let location = await Location.getCurrentPositionAsync({});
+			this.setState({
+			location,
+			region: {
+				latitude: location.coords.latitude,
+				longitude: location.coords.longitude,
+				latitudeDelta: 0.0922,
+				longitudeDelta: 0.0421,
+			},
+			});
+		}
 	}
 
 	render() {
-		let { image } = this.state;
+		let { image, region } = this.state;
 		return (
 			<View style={styles.container}>
 				<View style={styles.contentContainer}>
@@ -159,20 +178,34 @@ export default class App extends React.Component {
                             title="Take a photo"
                             color="black"
                          />
-
-                        </View>                          
-						{this.state.googleResponse && (
-							<FlatList
-								data={this.state.googleResponse.responses[0].labelAnnotations.map((item, index) => ({ id: `${index}`, description: item.description }))}
-								extraData={this.state}
-								keyExtractor={this._keyExtractor}
-								renderItem={({ item }) => <Text>Item: {item.description}</Text>}
-							/>
-						)}
+						</View>
+						{this.state.googleResponse && this.state.googleResponse.responses[0] && this.state.googleResponse.responses[0].labelAnnotations ? (
+						<FlatList
+							data={this.state.googleResponse.responses[0].labelAnnotations.map((item, index) => ({ id: `${index}`, description: item.description }))}
+							extraData={this.state}
+							keyExtractor={this._keyExtractor}
+							renderItem={({ item }) => <Text>Item: {item.description}</Text>}
+						/>
+						) : null}
 						{this._maybeRenderImage()}
 						{this._maybeRenderUploadingOverlay()}
-					</View>
+						</View>
 				</View>
+				{region ? (
+					// <View style={styles.mapContainer}>
+					<MapView
+						provider={PROVIDER_GOOGLE}
+						style={styles.map}
+						region={region}
+						showsUserLocation={true}
+					>
+						<Marker coordinate={region} />
+					</MapView>
+					// </View>
+				) : (
+					<ActivityIndicator size="large" />
+				)}
+
 			</View>
 		);
 	}
@@ -207,51 +240,58 @@ export default class App extends React.Component {
 	};
 
 	_maybeRenderImage = () => {
-    let { image, googleResponse } = this.state;
-    if (!image) {
-        return;
-    }
-
-    return (
-        <View
-            style={{
-                marginTop: 20,
-                width: 250,
-                borderRadius: 3,
-                elevation: 2
-            }}
-        >
-            <TouchableHighlight style={{ marginBottom: 10 }}>
-                <Button onPress={() => this.submitToGoogle(this.state.image)} title="Analyze!" />
-            </TouchableHighlight>
-
-            <View
-                style={{
-                    borderTopRightRadius: 3,
-                    borderTopLeftRadius: 3,
-                    shadowColor: 'rgba(0,0,0,1)',
-                    shadowOpacity: 0.2,
-                    shadowOffset: { width: 4, height: 4 },
-                    shadowRadius: 5,
-                    overflow: 'hidden'
-                }}
-            >
-                <Image source={{ uri: image }} style={{ width: 250, height: 250 }} />
-            </View>
-
-            {googleResponse && (
-                <View style={{ paddingVertical: 10, paddingHorizontal: 10 }}>
-                    <Text style={{ fontWeight: 'bold' }}>Detected Labels:</Text>
-                    {googleResponse.responses[0].labelAnnotations.map((label, index) => (
-                        <Text key={index}>
-                            {label.description} - Score: {label.score.toFixed(2)}
-                        </Text>
-                    ))}
-                </View>
-            )}
-        </View>
-    );
-  };
+		let { image, googleResponse } = this.state;
+		if (!image) {
+		  return;
+		}
+	  
+		return (
+		  <View
+			style={{
+			  marginTop: 20,
+			  width: 250,
+			  borderRadius: 3,
+			  elevation: 2,
+			}}
+		  >
+			<TouchableHighlight style={{ marginBottom: 10 }}>
+			  <Button
+				onPress={() => this.submitToGoogle(this.state.image)}
+				title="Analyze!"
+			  />
+			</TouchableHighlight>
+	  
+			<View
+			  style={{
+				borderTopRightRadius: 3,
+				borderTopLeftRadius: 3,
+				shadowColor: 'rgba(0,0,0,1)',
+				shadowOpacity: 0.2,
+				shadowOffset: { width: 4, height: 4 },
+				shadowRadius: 5,
+				overflow: 'hidden',
+			  }}
+			>
+			  <Image source={{ uri: image }} style={{ width: 250, height: 200 }} />
+			</View>
+	  
+			{googleResponse &&
+			googleResponse.responses[0] &&
+			googleResponse.responses[0].localizedObjectAnnotations ? (
+			  <View style={{ paddingVertical: 10, paddingHorizontal: 10 }}>
+				<Text style={{ fontWeight: 'bold' }}>Detected Objects:</Text>
+				{googleResponse.responses[0].localizedObjectAnnotations.map(
+				  (object, index) => (
+					<Text key={index}>
+					  {object.name} - Score: {object.score.toFixed(2)}
+					</Text>
+				  ),
+				)}
+			  </View>
+			) : null}
+		  </View>
+		);
+	  };
 
 	_keyExtractor = (item: { id: string }, index: number) => item.id;
 
@@ -336,7 +376,7 @@ export default class App extends React.Component {
             },
             features: [
               {
-                type: "LABEL_DETECTION",
+                type: "OBJECT_LOCALIZATION",
                 maxResults: 10,
               },
             ],
