@@ -23,7 +23,7 @@ import * as Location from 'expo-location';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#F9D162',
+		backgroundColor: '#F5F5F5',
 		paddingBottom: 10
 	},
 	developmentModeText: {
@@ -34,16 +34,16 @@ const styles = StyleSheet.create({
 		textAlign: 'center'
 	},
 	contentContainer: {
-		paddingTop: 50
+		paddingTop: 0
 	},
 
 	contentContainerTwo: {
-		paddingTop: 10
+		paddingTop: 0
 	},
 
 	getStartedContainer: {
-		alignItems: 'center',
-		marginHorizontal: 50
+		right: 60,
+		top: 20
 	},
 
 	getStartedText: {
@@ -55,68 +55,78 @@ const styles = StyleSheet.create({
 	},
 
 	helpContainer: {
-        width: deviceWidth - 32,
-        height: deviceHeight / 4,
-        alignSelf: 'center',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderRadius: 2,
-        borderColor: '#ddd',
-        borderBottomWidth: 0,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        elevation: 6,
-        marginLeft: 5,
-        marginRight: 5,
-        marginTop: 10,
-        backgroundColor: '#F5F5F5'
-        
+        width: 160,
+        height: 160,
+		left: 30,
+		top: 80,
+        backgroundColor: '#E8E5E5',
+		position: 'absolute',
+		borderColor: '#21C392', 
+		borderWidth: 5, 
+		borderStyle: 'dashed', 
 	},
 
 	helpContainerTwo: {
-        width: deviceWidth - 32,
-        height: deviceHeight / 3,
-        alignSelf: 'center',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderRadius: 2,
-        borderColor: '#ddd',
-        borderBottomWidth: 0,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        elevation: 6,
-        marginLeft: 5,
-        marginRight: 5,
-        marginTop: 10,
-        backgroundColor: '#F5F5F5'
-        
-	},
-
-    buttonTouchable: {
-        fontSize: 21,
-        backgroundColor: '#F9D162',
-        marginTop: 32,
-        width: deviceWidth - 62,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 44,
-        alignSelf:'center',
-        color: 'black'
-    },
+		width: 160,
+		height: 160,
+		left: 220,
+		top: 80,
+		backgroundColor: '#E8E5E5',
+		position: 'absolute',
+		borderColor: '#21C392', 
+		borderWidth: 5, 
+		borderStyle: 'dashed', 
+	  },
+	  
 
 	map: {
-		height: 230,
+		height: 200,
 		width: '92%', 
         marginLeft: '4%', 
         marginRight: '4%', 
-		top: 570,
+		top: 600,
 		position: 'absolute',
+	},
+	buttonTouchable1: {
+        marginTop: 0,
+		marginLeft: 0,
+        width: 160,
+        height: 160,
+		position: 'absolute',
+
+    },
+	buttonTouchable2: {
+        marginTop: 0,
+		marginLeft: 0,
+        width: 160,
+        height: 160,
+		position: 'absolute',
+
+    },
+	button: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		padding: 0,
+		borderRadius: 5,
+		overflow: 'hidden', 
+	},
+	buttonBackground: {
+		position: 'absolute',
+		width: 70,
+		height: 70,
+	},
+	contentContainer1: {
+		marginTop: 90,
+	},
+	buttonText: {
+		fontWeight: "bold",
+		color: 'black',
+		marginLeft: 5,
+		fontSize: 14,
+		marginBottom : 20,
+	},
+	verticalSpacer: {
+		height: 10,
 	},
 	
 });
@@ -156,30 +166,57 @@ export default class App extends React.Component {
 		return (
 			<View style={styles.container}>
 				<View style={styles.contentContainer}>
+					
 					<View style={styles.getStartedContainer}>
 						{image ? null : (
-							<Text style={styles.getStartedText}> ADD ANIMAL RECORD</Text>
+							<Text style={styles.getStartedText}> Verify your sighting: </Text>
 						)}
 					</View>
 
 					<View style={styles.helpContainer}>
-                        < View style = {styles.buttonTouchable}>
-                        <Button 
-							onPress={this._pickImage}
-							title="Pick an image from camera roll"
-                            color="black"
+
+					<View style={styles.buttonTouchable1}>
+						<TouchableOpacity
+						style={styles.button}
+						onPress={this._takePhoto}>
+						<Image
+							source={require('../../assets/images/camera.png')}
+							style={styles.buttonBackground}
+							resizeMode="cover"
 						/>
-
-                        </View>
-
-                        < View style = {styles.buttonTouchable}>
-                        <Button 
-                            onPress={this._takePhoto} 
-                            title="Take a photo"
-                            color="black"
-                         />
+						<View style={styles.verticalSpacer} />
+						<View style={styles.contentContainer1}>
+							<Text style={styles.buttonText}>Take a photo</Text>
 						</View>
-						{this.state.googleResponse && this.state.googleResponse.responses[0] && this.state.googleResponse.responses[0].labelAnnotations ? (
+						</TouchableOpacity>
+					</View>
+					</View>
+					<View style={styles.helpContainerTwo}>
+
+                        < View style = {styles.buttonTouchable2}>
+                        {/* <Button 
+							onPress={this._pickImage}
+							title="Upload Image"
+                            color="#F9D162"
+						/> */}
+						<TouchableOpacity
+						style={styles.button}
+						onPress={this._pickImage}>
+						<Image
+							source={require('../../assets/images/image.png')}
+							style={styles.buttonBackground}
+							resizeMode="cover"
+						/>
+						<View style={styles.verticalSpacer} />
+						<View style={styles.contentContainer1}>
+							<Text style={styles.buttonText}>Upload Image</Text>
+						</View>
+						</TouchableOpacity>
+                    </View>
+
+						
+					</View>
+					{this.state.googleResponse && this.state.googleResponse.responses[0] && this.state.googleResponse.responses[0].labelAnnotations ? (
 						<FlatList
 							data={this.state.googleResponse.responses[0].labelAnnotations.map((item, index) => ({ id: `${index}`, description: item.description }))}
 							extraData={this.state}
@@ -189,10 +226,11 @@ export default class App extends React.Component {
 						) : null}
 						{this._maybeRenderImage()}
 						{this._maybeRenderUploadingOverlay()}
-						</View>
 				</View>
+				
+				
 				{region ? (
-					// <View style={styles.mapContainer}>
+					
 					<MapView
 						provider={PROVIDER_GOOGLE}
 						style={styles.map}
@@ -201,7 +239,7 @@ export default class App extends React.Component {
 					>
 						<Marker coordinate={region} />
 					</MapView>
-					// </View>
+					
 				) : (
 					<ActivityIndicator size="large" />
 				)}
@@ -239,16 +277,82 @@ export default class App extends React.Component {
 		}
 	};
 
+	// _maybeRenderImage = () => {
+	// 	let { image, googleResponse } = this.state;
+	// 	if (!image) {
+	// 	  return;
+	// 	}
+	  
+	// 	return (
+	// 	  <View
+	// 		style={{
+	// 		  marginTop: 260,
+	// 		  left : 85,
+	// 		  width: 250,
+	// 		  borderRadius: 3,
+	// 		  elevation: 2,
+	// 		}}
+	// 	  >
+	// 		<TouchableHighlight style={{ marginBottom: 10 }}>
+	// 		  <Button
+	// 			onPress={() => this.submitToGoogle(this.state.image)}
+	// 			title="Analyze!"
+	// 			color={'#21C392'}
+	// 		  />
+	// 		</TouchableHighlight>
+	  
+	// 		<View
+	// 		  style={{
+	// 			borderTopRightRadius: 3,
+	// 			borderTopLeftRadius: 3,
+	// 			shadowColor: 'rgba(0,0,0,1)',
+	// 			shadowOpacity: 0.2,
+	// 			shadowOffset: { width: 4, height: 4 },
+	// 			shadowRadius: 5,
+	// 			overflow: 'hidden',
+	// 		  }}
+	// 		>
+	// 		  <Image source={{ uri: image }} style={{ width: 250, height: 200 }} />
+	// 		</View>
+	  
+	// 		{googleResponse &&
+	// 		googleResponse.responses[0] &&
+	// 		googleResponse.responses[0].localizedObjectAnnotations ? (
+	// 		  <View style={{ paddingVertical: 10, paddingHorizontal: 10 }}>
+	// 			<Text style={{ fontWeight: 'bold' }}>Detected Species:</Text>
+	// 			{googleResponse.responses[0].localizedObjectAnnotations.map(
+	// 			  (object, index) => (
+	// 				<Text key={index}>
+	// 				  {object.name} - {(object.score.toFixed(2)*100)}% match
+	// 				</Text>
+	// 			  ),
+	// 			)}
+	// 		  </View>
+	// 		) : null}
+	// 	  </View>
+	// 	);
+	//   };
 	_maybeRenderImage = () => {
 		let { image, googleResponse } = this.state;
 		if (!image) {
 		  return;
 		}
+
+		const getHighestScoringObject = (objects) => {
+			let highestScoringObject = objects[0];
+			objects.forEach((object) => {
+			  if (object.score > highestScoringObject.score) {
+				highestScoringObject = object;
+			  }
+			});
+			return highestScoringObject;
+		  };
 	  
 		return (
 		  <View
 			style={{
-			  marginTop: 20,
+			  marginTop: 260,
+			  left: 85,
 			  width: 250,
 			  borderRadius: 3,
 			  elevation: 2,
@@ -258,6 +362,7 @@ export default class App extends React.Component {
 			  <Button
 				onPress={() => this.submitToGoogle(this.state.image)}
 				title="Analyze!"
+				color={'#21C392'}
 			  />
 			</TouchableHighlight>
 	  
@@ -278,20 +383,24 @@ export default class App extends React.Component {
 			{googleResponse &&
 			googleResponse.responses[0] &&
 			googleResponse.responses[0].localizedObjectAnnotations ? (
-			  <View style={{ paddingVertical: 10, paddingHorizontal: 10 }}>
-				<Text style={{ fontWeight: 'bold' }}>Detected Objects:</Text>
-				{googleResponse.responses[0].localizedObjectAnnotations.map(
-				  (object, index) => (
-					<Text key={index}>
-					  {object.name} - Score: {object.score.toFixed(2)}
+				<View style={{ paddingVertical: 10, paddingHorizontal: 10 }}>
+				<Text style={{ fontWeight: 'bold' }}>Detected Species:</Text>
+				{(() => {
+					const highestScoringObject = getHighestScoringObject(
+					googleResponse.responses[0].localizedObjectAnnotations,
+					);
+					return (
+					<Text>
+						{highestScoringObject.name} - {(highestScoringObject.score.toFixed(2) * 100)}% match
 					</Text>
-				  ),
-				)}
-			  </View>
+					);
+				})()}
+				</View>
 			) : null}
-		  </View>
+			</View>
 		);
 	  };
+	  
 
 	_keyExtractor = (item: { id: string }, index: number) => item.id;
 

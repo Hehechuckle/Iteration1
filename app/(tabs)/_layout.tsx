@@ -1,7 +1,8 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Text, View} from '../../components/Themed';
-import { Pressable, useColorScheme } from 'react-native';
+import { Pressable, useColorScheme, Image } from 'react-native';
+
 
 import Colors from '../../constants/Colors';
 
@@ -20,13 +21,19 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         header: () => <View style={{ height: 30 }} />,
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-      }}>
+        tabBarActiveTintColor: '#21C392', // Change this value to your desired color
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'HOME',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          title: 'Map',
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={require('../../assets/images/map.png')}
+              style={{ width: 24, height: 24, tintColor: color }}
+            />
+          ),
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
@@ -43,25 +50,40 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="map"
         options={{
           title: 'Map',
-          tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={require('../../assets/images/map.png')}
+              style={{ width: 24, height: 24, tintColor: color }}
+            />
+          ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="two"
         options={{
           title: 'Info',
-          tabBarIcon: ({ color }) => <TabBarIcon name="info" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={require('../../assets/images/Info.png')}
+              style={{ width: 24, height: 24, tintColor: color }}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="record"
         options={{
-          title: 'record',
-          tabBarIcon: ({ color }) => <TabBarIcon name="camera" color={color} />,
+          title: 'Record',
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={require('../../assets/images/record.png')}
+              style={{ width: 24, height: 24, tintColor: color }}
+            />
+          ),
         }}
       />
     </Tabs>
