@@ -3,49 +3,50 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { Link, Tabs } from 'expo-router';
 
 export default function TabTwoScreen() {
+  const handleImageClick = () => {
+      console.log('Image clicked!');
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
-        <Link href="/koala" style={styles.link}>
-          <Text style={styles.linkText}>Koala</Text>
-        </Link>
-        <Image source={require('../../assets/images/koala.png')} style={styles.image} />
-      </View>
+      <Text style={styles.title}>       Native Australian Species</Text>
       <View style={styles.verticalSpacer} />
+      <View style={styles.rowContainer}>
+        <View style={styles.row}>
+          <Link href="/koala" style={styles.link}>
+            <Image source={require('../../assets/images/icon/koala.png')} style={styles.image} />
+        </Link>
+      </View>
       <View style={styles.row}>
         <Link href="/kangaroo" style={styles.link}>
-          <Text style={styles.linkText}>Kangaroo</Text>
+          <Image source={require('../../assets/images/icon/kangaroo.png')} style={styles.image} />
         </Link>
-        <Image source={require('../../assets/images/kangaroo.png')} style={styles.image} />
       </View>
-      <View style={styles.verticalSpacer} />
+    </View>
+    <View style={styles.rowContainer}>
       <View style={styles.row}>
         <Link href="/wallaby" style={styles.link}>
-          <Text style={styles.linkText}>Wallaby</Text>
+          <Image source={require('../../assets/images/icon/wallaby.png')} style={styles.image} />
         </Link>
-        <Image source={require('../../assets/images/wallaby.png')} style={styles.image} />
       </View>
-      <View style={styles.verticalSpacer} />
       <View style={styles.row}>
         <Link href="/platypus" style={styles.link}>
-          <Text style={styles.linkText}>Platypus</Text>
+          <Image source={require('../../assets/images/icon/platypus.png')} style={styles.image} />
         </Link>
-        <Image source={require('../../assets/images/platypus.png')} style={styles.image} />
       </View>
-      <View style={styles.verticalSpacer} />
-      <View style={styles.row}>
-        <Link href="/wombats" style={styles.link}>
-          <Text style={styles.linkText}>Wombats</Text>
-        </Link>
-        <Image source={require('../../assets/images/wombats.png')} style={styles.image} />
-      </View>
-      <View style={styles.verticalSpacer} />
-      <View style={styles.row}>
-        <Link href="/echidnas" style={styles.link}>
-          <Text style={styles.linkText}>Echidnas</Text>
-        </Link>
-        <Image source={require('../../assets/images/echidnas.png')} style={styles.image} />
-      </View>
+    </View>
+      <View style={styles.rowContainer}>
+        <View style={styles.row}>
+          <Link href="/wombats" style={styles.link}>
+            <Image source={require('../../assets/images/icon/wombat.png')} style={styles.image} />
+          </Link>
+        </View>
+        <View style={styles.row}>
+          <Link href="/echidnas" style={styles.link}>
+            <Image source={require('../../assets/images/icon/echidna.png')} style={styles.image} />
+          </Link>
+        </View>
+        </View>
     </View>
   );
 }
@@ -53,48 +54,44 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#F5F5F5',
+    paddingHorizontal: 10,
+    paddingVertical: 60,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    marginVertical: 10,
+  },
+  row: {
+    backgroundColor: '#F9D162',
+
+    width: 180,
+    height: 200,
+    borderRadius: 60,
+    paddingHorizontal: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    paddingVertical: 0,
+  },
+  link: {
+    width: 180,
+    height: 180,
+
+    left: 40,
+		top: 0,
+    position: 'absolute',
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color:'#21C392',
   },
   verticalSpacer: {
     height: 20,
   },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  row: {
-    flexDirection: 'row',
-    backgroundColor: '#FFFFCC',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 350,
-    height: 100,
-    borderRadius: 60,
-  },
-  link: {
-    flex: 1, 
-    alignItems: 'center', 
-    borderRadius: 70,
-    paddingVertical: 30,
-    paddingHorizontal: 30
-  },
-  linkText: {
-    fontSize: 25,
-    color: 'black',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  image: {
-    width: 150,
-    height: 100,
-    resizeMode: 'cover',
-    borderRadius: 60,
-    marginLeft: 10,
-  },
-  text: {
-    fontSize: 20,
-    color: 'purple',
-    textAlign: 'center',
-  },
 });
+

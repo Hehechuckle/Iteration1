@@ -8,15 +8,19 @@ export default function KoalaInfoScreen() {
     return (
         <View style={styles.container}>
         <Text style={styles.title}>Platypus</Text>
-        <Image source={require('../assets/images/platypus.png')} style={styles.image} />
-        <Text style={styles.text}> Platypus are unique animals that have an unusual appearance, combining features 
-        from different animals. They have a bill like a duck, webbed feet like an otter, and fur covering their body
-        like a mammal. One of the most unusual things about platypus is that they can lay eggs, which is rare for a
-        mammal. Platypus live in rivers and streams and are excellent swimmers, thanks to their webbed feet. They
-        feed on small aquatic animals like insects, crustaceans, and fish.
+        <Text style={styles.text}>
+        <Text style={{ fontStyle: 'italic' }}>(Ornithorhynchus anatinus)</Text>
         </Text>
-        <View style={styles.verticalSpacer} />
-        <Button onPress={()=> router.back()} title= "Go Back" />
+        <Image source={require('../assets/images/platypus.png')} style={styles.image} />
+        <Text style={styles.text}>Avg. Weight: 2kg</Text>
+        <Text style={styles.text}>Avg. Height: 27cm</Text>
+        <Text style={styles.text}>Top Speed: 7km/h</Text>
+        <Text style={styles.text}>Life Span: 15+ years{'\n'}</Text>
+        <Text style={[styles.text, {textAlign: 'left'}]}>
+        Platypuses are venomous mammals with spurs on their hind legs that deliver toxin. {'\n\n'}
+        Diet: Platypuses feed on aquatic animals such as crustaceans, larvae, and fish. ​{'\n\n'}
+        Population: 300,000 (Vulnerable)
+        </Text>
 
         </View>
     );
@@ -26,25 +30,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 20,
+    backgroundColor: '#F9D162',
   },
   verticalSpacer: {
     height: 20,
   },
-  container1: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFFFCC', 
-    width: 200, 
-    height: 100,
-  },
+
   title: {
     fontSize: 30,
     fontWeight: 'bold',
   },
+
+  myImageStyle: {
+    resizeMode: 'center',
+  },
+
   image: {
-    width: 150,
-    height: 150,
+    alignSelf: 'center',
+    height : 132,
+    width: 400,
   },
   text: {
     fontSize: 20,

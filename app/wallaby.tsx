@@ -7,16 +7,20 @@ export default function KoalaInfoScreen() {
     const router = useRouter();
     return (
         <View style={styles.container}>
-        <Text style={styles.title}>Wallaby</Text>
-        <Image source={require('../assets/images/wallaby.png')} style={styles.image} />
-        <Text style={styles.text}>Wallabies are cute animals that are found in Australia and nearby islands. They're 
-        similar to kangaroos but smaller in size. Wallabies are known for their strong legs and powerful tails,
-        which help them hop and balance as they move around. Wallabies are herbivores, which means they eat only
-        plants. They love munching on grasses, leaves, and other vegetation. Wallabies can be found in various 
-        habitats, such as forests, woodlands, and grasslands.
+        <Text style={styles.title}>Swamp Wallaby</Text>
+        <Text style={styles.text}>
+        <Text style={{ fontStyle: 'italic' }}>(Wallabia bicolor)</Text>
         </Text>
-        <View style={styles.verticalSpacer} />
-        <Button onPress={()=> router.back()} title= "Go Back" />
+        <Image source={require('../assets/images/wallaby.png')} style={styles.image} />
+        <Text style={styles.text}>Avg. Weight: 15kg</Text>
+        <Text style={styles.text}>Avg. Height: 73cm</Text>
+        <Text style={styles.text}>Top Speed: 70km/h</Text>
+        <Text style={styles.text}>Life Span: 15+ years{'\n'}</Text>
+        <Text style={[styles.text, {textAlign: 'left'}]}>
+        Swamp Wallabies are most active at night and have eyes well adapted to low light.{'\n\n'}
+        Diet: Swamp Wallabies feed on grasses, leaves, bark, and shrubs.​{'\n\n'}
+        Population: 10,000 (Near Threatened)
+        </Text>
 
         </View>
     );
@@ -26,25 +30,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 20,
+    backgroundColor: '#F9D162',
   },
   verticalSpacer: {
     height: 20,
   },
-  container1: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFFFCC', 
-    width: 200, 
-    height: 100,
-  },
+
   title: {
     fontSize: 30,
     fontWeight: 'bold',
   },
+
+  myImageStyle: {
+    resizeMode: 'center',
+  },
+
   image: {
-    width: 150,
-    height: 150,
+    alignSelf: 'center',
+    height : 300,
+    width: 300, 
   },
   text: {
     fontSize: 20,

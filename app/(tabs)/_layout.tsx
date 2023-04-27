@@ -78,12 +78,7 @@ export default function TabLayout() {
         name="record"
         options={{
           title: 'Record',
-          tabBarIcon: ({ color }) => (
-            <Image
-              source={require('../../assets/images/record.png')}
-              style={{ width: 24, height: 24, tintColor: color }}
-            />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="camera" color={color} />,
         }}
       />
     </Tabs>

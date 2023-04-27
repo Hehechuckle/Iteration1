@@ -8,16 +8,18 @@ export default function KoalaInfoScreen() {
     return (
         <View style={styles.container}>
         <Text style={styles.title}>Echidnas</Text>
-        <Image source={require('../assets/images/echidnas.png')} style={styles.image} />
         <Text style={styles.text}>
-        Echidnas are fascinating animals that have a spiky, prickly appearance and a long, sticky tongue. They're
-        also known as spiny anteaters because they love to eat ants and termites. Echidnas are very special creatures
-        with spines covering their bodies that keep them safe from predators. They can even roll up into a ball to
-        protect themselves even more! Echidnas are skilled diggers too, using their strong legs and sharp claws
-        to dig deep into the ground.
+        <Text style={{ fontStyle: 'italic' }}>(Tachyglossus aculeatus)</Text>
         </Text>
-        <View style={styles.verticalSpacer} />
-        <Button onPress={()=> router.back()} title= "Go Back" />
+        <Image source={require('../assets/images/echidna.png')} style={styles.image} />
+        <Text style={styles.text}>Avg. Weight: 5kg</Text>
+        <Text style={styles.text}>Avg. Height: 40cm</Text>
+        <Text style={styles.text}>Top Speed: 6km/h</Text>
+        <Text style={styles.text}>Life Span: 20+ years{'\n'}</Text>
+        <Text style={[styles.text, {textAlign: 'left'}]}>
+        The short beaked Echidna, is a small, egg-laying mammal with spines.{'\n\n'}
+        Diet: Echidnas mainly eat ants and termites.​{'\n\n'}
+        Population: 10,000 (Critically Endangered)​​</Text>
 
         </View>
     );
@@ -27,25 +29,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 20,
+    backgroundColor: '#F9D162',
   },
   verticalSpacer: {
     height: 20,
   },
-  container1: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFFFCC', 
-    width: 200, 
-    height: 100,
-  },
+
   title: {
     fontSize: 30,
     fontWeight: 'bold',
   },
+
+  myImageStyle: {
+    resizeMode: 'center',
+  },
+
   image: {
-    width: 150,
-    height: 150,
+    alignSelf: 'center',
+    height : 250,
+    width: 375, 
   },
   text: {
     fontSize: 20,

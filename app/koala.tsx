@@ -7,12 +7,19 @@ export default function KoalaInfoScreen() {
     const router = useRouter();
     return (
         <View style={styles.container}>
-
+        <Text style={styles.title}>Koala</Text>
+        <Text style={styles.text}>
+        <Text style={{ fontStyle: 'italic' }}>(Phascolarctos cinereus)</Text>
+        </Text>
         <Image source={require('../assets/images/koala.png')} style={styles.image} />
-
-        <Text style={styles.text}>Koala</Text>
-        <View style={styles.verticalSpacer} />
-        <Button onPress={()=> router.back()} title= "Go Back" />
+        <Text style={styles.text}>Avg. Weight: 10kg</Text>
+        <Text style={styles.text}>Avg. Height: 73cm</Text>
+        <Text style={styles.text}>Top Speed: 20km/h</Text>
+        <Text style={styles.text}>Life Span: 18+ years{'\n'}</Text>
+        <Text style={[styles.text, {textAlign: 'left'}]}> 
+        Koalas sleep for up to 20 hrs a day, often in Eucalyptus trees.​{'\n\n'}
+        Diet: Koalas eat eucalyptus leaves, which are toxic to most other animals.​{'\n\n'}
+        Population: 80,000 (Endangered)</Text>
         </View>
     );
 }
@@ -21,19 +28,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F9D162', 
+    paddingTop: 20,
+    backgroundColor: '#F9D162',
   },
   verticalSpacer: {
     height: 20,
   },
+
   title: {
     fontSize: 30,
     fontWeight: 'bold',
   },
+
+  myImageStyle: {
+    resizeMode: 'center',
+  },
+
   image: {
-    width: 150,
-    height: 150,
+    alignSelf: 'center',
+    height : 300,
+    width: 300, 
   },
   text: {
     fontSize: 20,
