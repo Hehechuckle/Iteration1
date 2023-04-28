@@ -122,10 +122,10 @@ export default function App() {
     const newRegion = {
       latitude: currentLocation.coords.latitude,
       longitude: currentLocation.coords.longitude,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-      // latitudeDelta: 0.461,
-      // longitudeDelta: 0.2105,
+      // latitudeDelta: 0.0922,
+      // longitudeDelta: 0.0421,
+      latitudeDelta: 0.461,
+      longitudeDelta: 0.2105,
     };
     setRecenteredLocation({
       latitude: currentLocation.coords.latitude,
