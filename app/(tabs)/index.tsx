@@ -21,6 +21,138 @@ interface animal {
   fact: string;
 }
 
+const mapJson = [
+  {
+      "featureType": "water",
+      "stylers": [
+          {
+              "saturation": 43
+          },
+          {
+              "lightness": -11
+          },
+          {
+              "hue": "#0088ff"
+          }
+      ]
+  },
+  {
+      "featureType": "road",
+      "elementType": "geometry.fill",
+      "stylers": [
+          {
+              "hue": "#ff0000"
+          },
+          {
+              "saturation": -100
+          },
+          {
+              "lightness": 99
+          }
+      ]
+  },
+  {
+      "featureType": "road",
+      "elementType": "geometry.stroke",
+      "stylers": [
+          {
+              "color": "#808080"
+          },
+          {
+              "lightness": 54
+          }
+      ]
+  },
+  {
+      "featureType": "landscape.man_made",
+      "elementType": "geometry.fill",
+      "stylers": [
+          {
+              "color": "#ece2d9"
+          }
+      ]
+  },
+  {
+      "featureType": "poi.park",
+      "elementType": "geometry.fill",
+      "stylers": [
+          {
+              "color": "#ccdca1"
+          }
+      ]
+  },
+  {
+      "featureType": "road",
+      "elementType": "labels.text.fill",
+      "stylers": [
+          {
+              "color": "#767676"
+          }
+      ]
+  },
+  {
+      "featureType": "road",
+      "elementType": "labels.text.stroke",
+      "stylers": [
+          {
+              "color": "#ffffff"
+          }
+      ]
+  },
+  {
+      "featureType": "poi",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
+      "featureType": "landscape.natural",
+      "elementType": "geometry.fill",
+      "stylers": [
+          {
+              "visibility": "on"
+          },
+          {
+              "color": "#b8cb93"
+          }
+      ]
+  },
+  {
+      "featureType": "poi.park",
+      "stylers": [
+          {
+              "visibility": "on"
+          }
+      ]
+  },
+  {
+      "featureType": "poi.sports_complex",
+      "stylers": [
+          {
+              "visibility": "on"
+          }
+      ]
+  },
+  {
+      "featureType": "poi.medical",
+      "stylers": [
+          {
+              "visibility": "on"
+          }
+      ]
+  },
+  {
+      "featureType": "poi.business",
+      "stylers": [
+          {
+              "visibility": "simplified"
+          }
+      ]
+  }
+]
+
 export default function App() {
   const mapRef = React.useRef(null);
 
@@ -202,7 +334,7 @@ export default function App() {
     <View style={{ flex: 1 }}>
       {renderSafetyMessageModal()}
       <GooglePlacesAutocomplete
-        placeholder='Search'
+        placeholder='Search location'
         fetchDetails={true}
         GooglePlacesSearchQuery={{
           rankby: 'distance',
@@ -227,6 +359,7 @@ export default function App() {
           setShowDirections(true);
 
         }}
+
         query={{
           key: 'AIzaSyCMp3VmFm3KGv5igbMSPOtX15WQq9Nko1o',
           language: 'en',
@@ -300,12 +433,8 @@ export default function App() {
             
           maxHeight={500}
           dropDownDirection='AUTO'
-          // theme="DARK"
           multiple={true}
           mode="BADGE"
-          // extendableBadgeContainer={true}
-          // showBadgeDot={false}
-          // badgeTextStyle={{ fontSize: 0 }}
           badgeDotColors={["#e76f51", "#00b4d8", "#e9c46a", "#e76f51", "#8ac926", "#00b4d8", "#e9c46a"]}
           placeholder="Select Species"
           style={{
@@ -320,6 +449,8 @@ export default function App() {
         ref={mapRef}
         style={styles.map}
         initialRegion={region}
+        customMapStyle={mapJson}
+        // showsUserLocation={true}
       >
         {recenteredLocation && (
           <Marker

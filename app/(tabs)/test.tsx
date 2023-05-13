@@ -1,403 +1,548 @@
-// import React, { useEffect, useState } from 'react';
-// import MapView, { Callout, CalloutSubview, Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
-// import { StyleSheet, View, Text, TextInput, StatusBar, Button, TouchableOpacity, Image} from 'react-native';
-// import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+// import React from 'react';
+// import {ActivityIndicator,Button,Clipboard,FlatList,Image,Share,StyleSheet,Text,ScrollView,View,TouchableHighlight, ImageBackground
+// } from 'react-native';
+// import { Dimensions} from 'react-native';
+// const deviceWidth = Dimensions.get('screen').width;
+// const deviceHeight = Dimensions.get('screen').height;
+// import * as ImagePicker from 'expo-image-picker';
+// import { ImagePickerResult } from 'expo-image-picker';
+// import * as MediaLibrary from 'expo-media-library';
+// import { Camera } from 'expo-camera';
+// import * as FileSystem from 'expo-file-system';
+// import axios from 'axios';
+// import google_api_key from '../../key/google_api_key';
+
+
+// import { useEffect, useState } from 'react';
+// import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+// import { TextInput, StatusBar, TouchableOpacity} from 'react-native';
 // import * as Location from 'expo-location';
-// import { getDocs, collection, onSnapshot } from 'firebase/firestore';
-// import { db } from '../../firebaseConfig';
-// import { MaterialIcons } from '@expo/vector-icons';
-// import MapViewDirections from 'react-native-maps-directions';
-// import DropDownPicker from 'react-native-dropdown-picker';
 
 
-// interface animal {
-//   id: string;
-//   name: string;
-//   sciname: string;
-//   date: string;
-//   latitude: number;
-//   longitude: number;
-//   fact: string;
-// }
-
-// export default function App() {
-//   const mapRef = React.useRef(null);
-
-//   const [region, setRegion] = React.useState();
-
-//   const [animalData, setAnimalData] = useState<animal[]>([]);
-
-//   const [recenteredLocation, setRecenteredLocation] = useState(null);
-
-//   const [searchedLocation, setSearchedLocation] = useState(null);
-
-//   const [showDirections, setShowDirections] = useState(false);
-
-//   const [searchedLocationDetails, setSearchedLocationDetails] = useState(null);
-
-//   const [displayDirections, setDisplayDirections] = useState(false);
-
-//   const [open, setOpen] = useState(false);
-//   const [value, setValue] = useState(['koala', 'Eastern Grey Kangaroo', 'Swamp Wallaby', 'Common Wombat', 'Short-beaked Echidna', 'Platypus']);
-//   const [items, setItems] = useState([
-//     { label: 'Koala', value: 'koala' },
-//     { label: 'Kangaroo', value: 'Eastern Grey Kangaroo' },
-//     { label: 'Wallaby', value: 'Swamp Wallaby' },
-//     { label: 'Wombat', value: 'Common Wombat' },
-//     { label: 'Echidnas', value: 'Short-beaked Echidna' },
-//     { label: 'Platypus', value: 'Platypus' },
-//   ]);
-
-//   const cancelSearch = () => {
-//     setSearchedLocation(null);
-//     setShowDirections(false);
-//     setDisplayDirections(false);
-//     reCenterMap();
-//   };
-
-//   const getAnimalIcon = (animalName: string) => {
-//     switch (animalName) {
-//       case 'koala':
-//         return require('../../assets/images/icon/koala.png');
-//       case 'Eastern Grey Kangaroo':
-//         return require('../../assets/images/icon/kangaroo.png');
-//       case 'Platypus':
-//         return require('../../assets/images/icon/platypus.png');
-//       case 'Short-beaked Echidna':
-//         return require('../../assets/images/icon/echidna.png');
-//       case 'Swamp Wallaby':
-//         return require('../../assets/images/icon/wallaby.png');
-//       case 'Common Wombat':
-//         return require('../../assets/images/icon/wombat.png');
-//       default:
-//         return require('../../assets/images/icon/koala.png');
-//     }
-//   };
-
-//   const reCenterMap = async () => {
-//     let currentLocation = await Location.getCurrentPositionAsync({});
-//     const newRegion = {
-//       latitude: currentLocation.coords.latitude,
-//       longitude: currentLocation.coords.longitude,
-//       latitudeDelta: 0.0922,
-//       longitudeDelta: 0.0421,
-//     };
-//     setRecenteredLocation({
-//       latitude: currentLocation.coords.latitude,
-//       longitude: currentLocation.coords.longitude,
-//     });
-//     if (mapRef.current) {
-//       mapRef.current.animateToRegion(newRegion, 1000);
-//     }
-//   };
-
-//   useEffect(() => {
-//     const animal = collection(db, 'Animals2.2')
-//     const record = onSnapshot(animal,{
-//       next: (snapshot) => {
-//         const animalData: animal[]=[];
-//         snapshot.docs.forEach((doc) => {
-//           const data = doc.data();
-//           animalData.push({
-//             id: doc.id,
-//             name: data.name,
-//             sciname: data.sciname,
-//             date: data.date,
-//             latitude: data.latitude,
-//             longitude: data.longitude,
-//             fact: data.fact,
-//           });
-//         })
-//         setAnimalData(animalData)
-//       }
-//     })
-//     return () => record();
-//   },[]);
-
-//   useEffect(() => {
-//     const getPermission = async () => {
-//       let { status } = await Location.requestForegroundPermissionsAsync();
-//       if (status !== 'granted') {
-//         console.log("Please grant location permissions");
-//         return;
-//       }
-//       let currentLocation = await Location.getCurrentPositionAsync({});
-  
-//       setRegion({
-//         latitude: currentLocation.coords.latitude,
-//         longitude: currentLocation.coords.longitude,
-//         latitudeDelta: 0.0922,
-//         longitudeDelta: 0.0421,
-//       });
-  
-//       reCenterMap();
-//     };
-//     getPermission();
-//   }, []);
-
-//   if (!region) {
-//     return <Text>Loading...</Text>;
-//   }
-
-//   return (
-//     <View style={{ flex: 1 }}>
-//       <GooglePlacesAutocomplete
-//         placeholder='Search'
-//         fetchDetails={true}
-//         GooglePlacesSearchQuery={{
-//           rankby: 'distance',
-//         }}
-//         onPress={(data, details = null) => {
-//           // console.log(data, details);
-//           setSearchedLocationDetails(details);
-
-//           const newRegion = {
-//             latitude: details.geometry.location.lat,
-//             longitude: details.geometry.location.lng,
-//             latitudeDelta: 0.0922,
-//             longitudeDelta: 0.0421,
-//           };
-//           setSearchedLocation({
-//             latitude: details.geometry.location.lat,
-//             longitude: details.geometry.location.lng,
-//           });
-//           setRegion(newRegion);
-//           mapRef.current.animateToRegion(newRegion, 1000);
-
-//           setShowDirections(true);
-
-//         }}
-//         query={{
-//           key: 'AIzaSyCMp3VmFm3KGv5igbMSPOtX15WQq9Nko1o',
-//           language: 'en',
-//           location: `${region.latitude},${region.longitude}`,
-//         }}
-//         styles={{
-//           container: {
-//             flex: 0,
-//             position: 'absolute',
-//             width: '90%', 
-//             marginLeft: '5%', 
-//             marginRight: '5%', 
-//             zIndex: 1,
-//             paddingTop: 15,
-//           },
-//           textInputContainer: {
-//             backgroundColor: 'white',
-//             borderTopWidth: 0,
-//             borderBottomWidth: 0,
-//             paddingHorizontal: 10,
-//             borderRadius: 15,
-//             borderWidth: 1,
-//             borderColor: '#ccc',
-//           },
-//           textInput: {
-//             height: 38,
-//             color: '#5d5d5d',
-//             fontSize: 16,
-//           },
-//           listView: {
-//             backgroundColor: 'white',
-//             marginTop: 10, 
-//             borderRadius: 5, 
-//             borderWidth: 1, 
-//             borderColor: '#ccc', 
-//           },
-//         }}
-//         renderLeftButton={() => (
-//           <TouchableOpacity
-//             style={{
-//               justifyContent: 'center',
-//               alignItems: 'center',
-//               paddingHorizontal: 10,
-//             }}
-//             onPress={cancelSearch}
-//           >
-//             <MaterialIcons name="arrow-back" size={24} color="black" />
-//           </TouchableOpacity>
-//         )}
-//       />
-
-//       <View style={{
-//         position: 'absolute',
-//         bottom: 0,
-//         backgroundColor: '#171717',
-//         paddingHorizontal: 15,
-//         borderRadius: 20,
-//         zIndex: 1,
-//         width: '75%', 
-//         marginRight: '20%', 
-//         marginLeft: '5%', 
-//       }}>
-//         <DropDownPicker
-//           open={open}
-//           value={value}
-//           items={items}
-//           setOpen={setOpen}
-//           setValue={setValue}
-//           setItems={setItems}
-          
-//           maxHeight={500}
-//           dropDownDirection='AUTO'
-
-//           theme="DARK"
-//           multiple={true}
-//           mode="BADGE"
-//           badgeDotColors={["#e76f51", "#00b4d8", "#e9c46a", "#e76f51", "#8ac926", "#00b4d8", "#e9c46a"]}
-//         />
-//       </View>
-
-//       <MapView
-//         provider={PROVIDER_GOOGLE}
-//         ref={mapRef}
-//         style={styles.map}
-//         initialRegion={region}
-//       >
-//         {recenteredLocation && (
-//           <Marker
-//             coordinate={{
-//               latitude: recenteredLocation.latitude,
-//               longitude: recenteredLocation.longitude,
-//             }}
-//           >
-//             <Image
-//               source={require('../../assets/images/icon/location2.png')}
-//               style={{ height: 50, width: 50 }}
-//               resizeMode="contain"
-//             />
-//           </Marker>
-//         )}
-
-//         {searchedLocation && (
-//           <Marker
-//             coordinate={{
-//               latitude: searchedLocation.latitude,
-//               longitude: searchedLocation.longitude,
-//             }}
-//             onPress={() => {
-//               setShowDirections(true);
-//               setDisplayDirections(true);
-//             }}
-//           >
-//             <Image
-//               source={require('../../assets/images/icon/location.png')}
-//               style={{ height: 50, width: 50 }}
-//               resizeMode="contain"
-//             />
-//             <Callout tooltip>
-//               <View style={styles.customCallout}>
-//                 <Text style={styles.calloutText}>{searchedLocationDetails.name}</Text>
-//                 <Text style={styles.calloutSubText}>{searchedLocationDetails.formatted_address}</Text>
-//               </View>
-//             </Callout>
-//           </Marker>
-//         )}
-
-
-//         {animalData
-//           .filter((animal) => value.includes(animal.name))
-//           .map((animal) => (
-//           <Marker
-//             key={animal.id}
-//             coordinate={{
-//               latitude: animal.latitude,
-//               longitude: animal.longitude,
-//             }}
-//           >
-//             <Image
-//               source={getAnimalIcon(animal.name)}
-//               style={{ height: 30, width: 30 }}
-//               resizeMode="contain"
-//             />
-//             <Callout style={styles.calloutContainer}>
-//               <Text style={styles.calloutText}>{animal.name}</Text>
-//               <Text style={styles.calloutSubText}>Date: {animal.date}</Text>
-//             </Callout>
-//           </Marker> 
-//         ))}
-
-//         {recenteredLocation && showDirections && displayDirections && (
-//           <MapViewDirections
-//             origin={recenteredLocation}
-//             destination={{
-//               latitude: region.latitude,
-//               longitude: region.longitude,
-//             }}
-//             apikey="AIzaSyCMp3VmFm3KGv5igbMSPOtX15WQq9Nko1o"
-//             strokeWidth={5}
-//             strokeColor="blue"
-//           />
-//         )}
-
-//       </MapView>
-
-//       <TouchableOpacity
-//         style={styles.reCenterButton}
-//         onPress={reCenterMap}
-//       >
-//         <MaterialIcons name="my-location" size={24} color="black" />
-//       </TouchableOpacity>
-//     </View>
-//   );
-// }
 
 // const styles = StyleSheet.create({
-//   container: {
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     flex: 1,
-//   },
-//   map: {
-//     width: '100%',
-//     height: '100%',
-//   },
-//   reCenterButton: {
-//     position: 'absolute',
-//     bottom: 80,
-//     right: 20,
-//     backgroundColor: 'white',
-//     borderRadius: 50,
-//     padding: 10,
-//     zIndex: 2,
-//   },
-//   customMarker: {
-//     backgroundColor: 'blue',
-//     padding: 5,
-//     borderRadius: 5,
-//   },
-//   markerText: {
-//     color: 'white',
-//     fontWeight: 'bold',
-//   },
-//   calloutText: {
-//     fontSize: 14,
-//     color: '#333',
-//     fontWeight: 'bold',
-//   },
-//   calloutSubText: {
-//     fontSize: 12,
-//     color: '#666',
-//   },
-//   calloutContainer: {
-//     width: 200, 
-//     hight: 100,
-//     borderRadius: 20,
-//   },
-//   directionsButton: {
-//     backgroundColor: 'blue',
-//     paddingHorizontal: 10,
-//     paddingVertical: 5,
-//     borderRadius: 5,
-//     marginTop: 5,
-//   },
-//   directionsButtonText: {
-//     color: 'white',
-//     fontWeight: 'bold',
-//   },
-//   customCallout: {
-//     backgroundColor: 'white',
-//     borderRadius: 10,
-//     padding: 10,
-//     width: 250,
-//   },
+// 	container: {
+// 		flex: 1,
+// 		paddingBottom: 10
+// 	},
+// 	developmentModeText: {
+// 		marginBottom: 20,
+// 		color: 'rgba(0,0,0,0.4)',
+// 		fontSize: 14,
+// 		lineHeight: 19,
+// 		textAlign: 'center'
+// 	},
+// 	contentContainer: {
+// 		paddingTop: 0
+// 	},
+
+// 	contentContainerTwo: {
+// 		paddingTop: 0
+// 	},
+
+// 	getStartedContainer: {
+// 		left: "7%",
+// 		top: 50
+// 	},
+
+// 	introContainer: {
+// 		width: "90%",
+// 		top: 60,
+// 		left: "8%",
+// 	},
+
+// 	getStartedText: {
+//         fontWeight: 'bold',
+//         fontSize: 25,
+//         // textAlign: 'center',
+//         padding: 10,
+//         color: 'black',
+// 		textAlign: 'left',
+// 	},
+
+// 	introText: {
+// 		fontWeight: 'bold',
+//         fontSize: 20,
+//         textAlign: 'left',
+//         padding: 10,
+//         color: 'black'
+		
+// 	},
+
+// 	helpContainer: {
+//         width: "80%",
+//         height:"100%",
+// 		left: "10%",
+// 		top: 270,
+// 		alignItems: 'center',
+// 		justifyContent: 'center',
+//         backgroundColor: '#F5F5F5',
+// 		position: 'absolute',
+// 		borderColor: '#21C392', 
+// 		borderWidth: 5, 
+// 		borderRadius: 20,
+// 	},
+
+// 	helpContainerTwo: {
+// 		width: "80%",
+// 		height: "100%",
+// 		left: "10%",
+// 		top: 500,
+// 		alignItems: 'center',
+// 		justifyContent: 'center',
+// 		backgroundColor: '#F5F5F5',
+// 		position: 'absolute',
+// 		borderColor: '#21C392', 
+// 		borderWidth: 5, 
+// 		borderRadius: 20,
+// 	  },
+
+// 	buttonTouchable1: {
+//         marginTop: 0,
+// 		marginLeft: 0,
+//         width: 200,
+//         height: 200,
+// 		position: 'absolute',
+
+//     },
+// 	buttonTouchable2: {
+//         marginTop: 0,
+// 		marginLeft: 0,
+//         width: 200,
+//         height: 200,
+// 		position: 'absolute',
+
+//     },
+
+// 	button: {
+// 		alignItems: 'center',
+// 		justifyContent: 'center',
+// 		padding: 0,
+// 		borderRadius: 5,
+// 		overflow: 'hidden', 
+// 	},
+
+// 	buttonBackground: {
+// 		position: 'absolute',
+// 		width: 80,
+// 		height: 80,
+// 	},
+
+// 	contentContainer1: {
+// 		marginTop: 120,
+// 	},
+
+// 	buttonText: {
+// 		fontWeight: "bold",
+// 		color: 'black',
+// 		marginLeft: 5,
+// 		fontSize: 14,
+// 		marginBottom : 20,
+// 	},
+
+// 	verticalSpacer: {
+// 		height: 20,
+// 	},
+
+// 	loadingImage: {
+// 		width: '100%',
+// 		height: '100%',
+// 	},
+// 	buttonContainer: {
+// 		backgroundColor: '#F9D162', 
+// 		paddingVertical: 10, 
+// 		paddingHorizontal: 20, 
+// 		borderRadius: 20, 
+// 		alignItems: 'center',
+// 		margin: 5,
+// 		height: 80,
+// 		flexDirection: 'row', 
+//     	justifyContent: 'space-between', 
+// 	  },
+// 	aniButtonText: {
+// 		color: 'black', 
+// 		fontSize: 16, 
+// 		fontWeight: 'bold',
+// 	},
+// 	iconStyle: {
+// 		width: 50,  
+// 		height: 50, 
+// 		resizeMode: 'contain', 
+// 	},
+
 // });
+
+
+// export default class App extends React.Component {
+// 	state = {
+// 		image: null,
+// 		uploading: false,
+// 		googleResponse: null as { responses: { labelAnnotations?: { description: string }[], localizedObjectAnnotations?: { name: string, score: number }[] }[] } | null,
+// 		location: null,
+//   		region: null,
+// 		isImageSelected: false,
+// 	  };
+	  
+// 	async componentDidMount() {
+// 		await Camera.requestCameraPermissionsAsync();
+// 		await MediaLibrary.requestPermissionsAsync();
+// 		await ImagePicker.requestCameraPermissionsAsync();
+
+// 		let { status } = await Location.requestForegroundPermissionsAsync();
+// 		if (status === "granted") {
+// 			let location = await Location.getCurrentPositionAsync({});
+// 			this.setState({
+// 			location,
+// 			region: {
+// 				latitude: location.coords.latitude,
+// 				longitude: location.coords.longitude,
+// 				latitudeDelta: 0.0922,
+// 				longitudeDelta: 0.0421,
+// 			},
+// 			});
+// 		}
+// 	}
+
+// 	render() {
+// 		let { image, region } = this.state;
+// 		return (
+// 		  <ImageBackground
+// 			source={require('../../assets/images/recordImage.png')}
+// 			style={styles.loadingImage}
+// 			>
+// 			<View style={styles.container}>
+// 				<View style={styles.contentContainer}>
+					
+// 					<View style={styles.getStartedContainer}>
+// 						{image ? null : (
+// 							<Text style={styles.getStartedText}> Identify your sighting: </Text>
+// 						)}
+// 					</View>
+// 					<View style={styles.introContainer}>
+// 						{image ? null : (
+// 							<Text style={styles.introText}> 
+// 							Our species recognition tool can 
+// 							help you identify the type of native
+// 							Australian animal you've sighted.
+// 							</Text>
+// 						)}
+// 					</View>
+
+// 					{!this.state.isImageSelected && (	
+// 					<View style={styles.helpContainer}>
+// 						<View style={styles.buttonTouchable1}>
+// 						<TouchableOpacity
+// 						style={styles.button}
+// 						onPress={this._takePhoto}>
+// 						<Image
+// 							source={require('../../assets/images/camera.png')}
+// 							style={styles.buttonBackground}
+// 							resizeMode="cover"
+// 						/>
+// 						<View style={styles.verticalSpacer} />
+// 						<View style={styles.contentContainer1}>
+// 							<Text style={styles.buttonText}>Take a photo</Text>
+// 						</View>
+// 						</TouchableOpacity>
+// 					</View>
+// 					</View>
+// 					)}
+
+// 					{!this.state.isImageSelected && (
+// 					<View style={styles.helpContainerTwo}>
+//                         < View style = {styles.buttonTouchable2}>
+// 						<TouchableOpacity
+// 						style={styles.button}
+// 						onPress={this._pickImage}>
+// 						<Image
+// 							source={require('../../assets/images/image.png')}
+// 							style={styles.buttonBackground}
+// 							resizeMode="cover"
+// 						/>
+// 						<View style={styles.verticalSpacer} />
+// 						<View style={styles.contentContainer1}>
+// 							<Text style={styles.buttonText}>Upload Image</Text>
+// 						</View>
+// 						</TouchableOpacity>
+//                     </View>
+// 					</View>
+// 					)}
+
+// 					{this.state.googleResponse && this.state.googleResponse.responses[0] && this.state.googleResponse.responses[0].labelAnnotations ? (
+// 						<FlatList
+// 							data={this.state.googleResponse.responses[0].labelAnnotations.map((item, index) => ({ id: `${index}`, description: item.description }))}
+// 							extraData={this.state}
+// 							keyExtractor={this._keyExtractor}
+// 							renderItem={({ item }) => <Text>Item: {item.description}</Text>}
+// 						/>
+// 						) : null}
+// 						{this._maybeRenderImage()}
+// 						{this._maybeRenderUploadingOverlay()}
+// 				</View>
+		
+// 			</View>
+// 			</ImageBackground>
+// 		);
+// 	}
+
+// 	organize = (array: any[]) => {
+// 		return array.map(function(item, i) {
+// 			return (
+// 				<View key={i}>
+// 					<Text>{item}</Text>
+// 				</View>
+// 			);
+// 		});
+// 	};
+
+// 	_maybeRenderUploadingOverlay = () => {
+// 		if (this.state.uploading) {
+// 			return (
+// 				<View
+// 					style={[
+// 						StyleSheet.absoluteFill,
+// 						{
+// 							backgroundColor: 'rgba(0,0,0,0.4)',
+// 							alignItems: 'center',
+// 							justifyContent: 'center'
+// 						}
+// 					]}
+// 				>
+// 					<ActivityIndicator color="#fff" animating size="large" />
+// 				</View>
+// 			);
+// 		}
+// 	};
+
+// 	_maybeRenderImage = () => {
+// 		let { image, googleResponse } = this.state;
+// 		if (!image) {
+// 			return;
+// 		}
+	
+// 		const getHighestScoringObject = (objects) => {
+// 			let highestScoringObject = objects[0];
+// 			objects.forEach((object) => {
+// 				if (object.score > highestScoringObject.score) {
+// 					highestScoringObject = object;
+// 				}
+// 			});
+// 			return highestScoringObject;
+// 		};
+	
+// 		const animals = ["Kangaroo", "Koala", "Wombat", "Wallaby", "Echidna", "Platypus"]; 
+
+// 			const getAnimalIcon = (animalName: string) => {
+// 				switch (animalName) {
+// 				case 'koala':
+// 					return require('../../assets/images/icon/koala.png');
+// 				case 'Kangaroo':
+// 					return require('../../assets/images/icon/kangaroo.png');
+// 				case 'Platypus':
+// 					return require('../../assets/images/icon/platypus.png');
+// 				case 'Echidna':
+// 					return require('../../assets/images/icon/echidna.png');
+// 				case 'Wallaby':
+// 					return require('../../assets/images/icon/wallaby.png');
+// 				case 'Wombat':
+// 					return require('../../assets/images/icon/wombat.png');
+// 				default:
+// 					return require('../../assets/images/icon/koala.png');
+// 				}
+// 			};
+	
+// 		return (
+// 			<View
+// 				style={{
+// 					marginTop: 0,
+// 					width: "100%",
+// 					// borderRadius: 3,
+// 					elevation: 2,
+// 				}}
+// 			>
+// 				<TouchableHighlight style={{ marginBottom: 0 }}>
+// 					<Button
+// 						onPress={() => this.submitToGoogle(this.state.image)}
+// 						title="Analyze!"
+// 						color={'#21C392'}
+// 					/>
+// 				</TouchableHighlight>
+	
+// 				<View
+// 					style={{
+// 						borderTopRightRadius: 3,
+// 						borderTopLeftRadius: 3,
+// 						shadowColor: 'rgba(0,0,0,1)',
+// 						shadowOpacity: 0.2,
+// 						shadowOffset: { width: 4, height: 4 },
+// 						shadowRadius: 5,
+// 						overflow: 'hidden',
+// 					}}
+// 				>
+// 					<Image source={{ uri: image }} style={{ width: "100%", height: 300 }} />
+// 				</View>
+	
+// 				{googleResponse &&
+// 					googleResponse.responses[0] &&
+// 					googleResponse.responses[0].localizedObjectAnnotations ? (
+// 						<View style={{ paddingVertical: 10, paddingHorizontal: 10 }}>
+// 							<Text style={{ fontWeight: 'bold' }}>Detected Species:</Text>
+// 							{(() => {
+// 								const highestScoringObject = getHighestScoringObject(
+// 									googleResponse.responses[0].localizedObjectAnnotations,
+// 								);
+// 								return (
+// 									<Text>
+// 										{highestScoringObject.name} - {(highestScoringObject.score.toFixed(2) * 100)}% match
+// 									</Text>
+// 								);
+// 							})()}
+// 						</View>
+// 					) : null}
+
+// 				<View style={styles.verticalSpacer} />
+
+// 				<View>
+// 					<Text style={styles.getStartedText}> Verify your sighting: </Text>
+// 				</View>
+
+// 				<View style={styles.verticalSpacer} />
+	
+// 				<View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+// 					{animals.map((animal, index) => (
+// 						<View key={index} style={{ width: '45%', margin: 10 }}>
+// 							<TouchableOpacity
+// 								style={styles.buttonContainer}
+// 								onPress={() => this.handleAnimalSelection(animal)}
+// 							>
+// 								<Image source={getAnimalIcon(animal)} style={styles.iconStyle} />
+// 								<Text style={styles.aniButtonText}>{animal}</Text>
+// 							</TouchableOpacity>
+// 						</View>
+// 					))}
+// 				</View>
+// 			</View>
+// 		);
+// 	};
+	
+
+// 	handleAnimalSelection = (animal) => {
+// 		console.log(animal);
+// 	};
+	  
+
+// 	_keyExtractor = (item: { id: string }, index: number) => item.id;
+
+// 	_renderItem = (item: { id: string }) => {
+// 		<Text>response: {JSON.stringify(item)}</Text>;
+// 	};
+
+// 	_share = () => {
+// 		const url = this.state.image || '';
+// 		Share.share({
+// 			message: this.state.googleResponse ? JSON.stringify(this.state.googleResponse.responses) : '',
+// 			title: 'Check it out',
+// 			url: url
+// 		});
+// 	};
+
+// 	_copyToClipboard = () => {
+// 		if (!this.state.image) {
+// 			return;
+// 		}
+	
+// 		Clipboard.setString(this.state.image);
+// 		alert('Copied to clipboard');
+// 	};
+
+// 	_takePhoto = async () => {
+// 		let pickerResult = await ImagePicker.launchCameraAsync({
+// 			allowsEditing: true,
+// 			aspect: [4, 3]
+// 		});
+
+// 		this._handleImagePicked(pickerResult);
+// 	};
+
+// 	_pickImage = async () => {
+// 		let pickerResult = await ImagePicker.launchImageLibraryAsync({
+// 			allowsEditing: true,
+// 			aspect: [4, 3]
+// 		});
+
+// 		this._handleImagePicked(pickerResult);
+// 	};
+
+// 	_handleImagePicked = async (pickerResult: ImagePickerResult) => {
+// 		try {
+// 		  this.setState({ uploading: true });
+// 		  let uploadUrl = '';
+	  
+// 		  if (pickerResult.canceled) {
+// 			return;
+// 		  }
+	  
+// 		  const asset = pickerResult.assets[0];
+// 		  if (asset) {
+// 			uploadUrl = asset.uri;
+// 		  }
+	  
+// 		  this.setState({ image: uploadUrl , isImageSelected: true });
+// 		} catch (e) {
+// 		  console.log(e);
+// 		  alert('Upload failed, sorry :(');
+// 		} finally {
+// 		  this.setState({ uploading: false });
+// 		}
+// 	};
+
+// 	submitToGoogle = async (imageUri: string) => {
+//     try {
+//       this.setState({ uploading: true });
+  
+//       const base64Image = await FileSystem.readAsStringAsync(imageUri, {
+//         encoding: FileSystem.EncodingType.Base64,
+//       });
+  
+//       let body = JSON.stringify({
+//         requests: [
+//           {
+//             image: {
+//               content: base64Image,
+//             },
+//             features: [
+//               {
+//                 type: "OBJECT_LOCALIZATION",
+//                 maxResults: 10,
+//               },
+//             ],
+//           },
+//         ],
+//       });
+	  
+// 		  let response = await fetch(
+// 			'https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCMp3VmFm3KGv5igbMSPOtX15WQq9Nko1o',
+// 			{
+// 			  headers: {
+// 				Accept: 'application/json',
+// 				'Content-Type': 'application/json',
+// 			  },
+// 			  method: 'POST',
+// 			  body: body,
+// 			}
+// 		  );
+	  
+// 		  let responseJson = await response.json();
+// 		  console.log(responseJson);
+// 		  this.setState({
+// 			googleResponse: responseJson,
+// 			uploading: false,
+// 		  });
+// 		} catch (error) {
+// 		  console.log(error);
+// 		}
+// 	};
+// }
+
+
+  

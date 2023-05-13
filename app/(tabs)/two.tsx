@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
   link: {
     width: 180,
     height: 180,
-
     left: 40,
 		top: 0,
     position: 'absolute',
