@@ -1,100 +1,171 @@
 // import React from 'react';
-// import { Image, StyleSheet, Text, View } from 'react-native';
-// import { Link, Tabs } from 'expo-router';
+// import {
+//   View,
+//   SafeAreaView,
+//   Image
+// } from 'react-native';
+// import Carousel from 'react-native-snap-carousel';
 
-// export default function TabTwoScreen() {
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.row}>
-//         <Link href="/koala" style={styles.link}>
-//           <Text style={styles.linkText}>Koala</Text>
-//         </Link>
-//         <Image source={require('../../assets/images/koala.png')} style={styles.image} />
-//       </View>
-//       <View style={styles.verticalSpacer} />
-//       <View style={styles.row}>
-//         <Link href="/kangaroo" style={styles.link}>
-//           <Text style={styles.linkText}>Kangaroo</Text>
-//         </Link>
-//         <Image source={require('../../assets/images/kangaroo.png')} style={styles.image} />
-//       </View>
-//       <View style={styles.verticalSpacer} />
-//       <View style={styles.row}>
-//         <Link href="/wallaby" style={styles.link}>
-//           <Text style={styles.linkText}>Wallaby</Text>
-//         </Link>
-//         <Image source={require('../../assets/images/wallaby.png')} style={styles.image} />
-//       </View>
-//       <View style={styles.verticalSpacer} />
-//       <View style={styles.row}>
-//         <Link href="/platypus" style={styles.link}>
-//           <Text style={styles.linkText}>Platypus</Text>
-//         </Link>
-//         <Image source={require('../../assets/images/platypus.png')} style={styles.image} />
-//       </View>
-//       <View style={styles.verticalSpacer} />
-//       <View style={styles.row}>
-//         <Link href="/wombats" style={styles.link}>
-//           <Text style={styles.linkText}>Wombats</Text>
-//         </Link>
-//         <Image source={require('../../assets/images/wombats.png')} style={styles.image} />
-//       </View>
-//       <View style={styles.verticalSpacer} />
-//       <View style={styles.row}>
-//         <Link href="/echidnas" style={styles.link}>
-//           <Text style={styles.linkText}>Echidnas</Text>
-//         </Link>
-//         <Image source={require('../../assets/images/echidnas.png')} style={styles.image} />
-//       </View>
-//     </View>
-//   );
+// export default class App extends React.Component {
+//     constructor(props){
+//         super(props);
+//         this.state = {
+//           activeIndex:0,
+//           carouselItems: [
+//             {
+//               image: require('../../assets/images/hotspots/koala1.png'),
+//             },
+//             {
+//                 image: require('../../assets/images/hotspots/echidna1.png'),
+//               },
+//             {
+//               image: require('../../assets/images/hotspots/kangaroo1.png'),
+//             },
+//             {
+//                 image: require('../../assets/images/hotspots/wallaby1.png'),
+//               },
+//             {
+//               image: require('../../assets/images/hotspots/wombat1.png'),
+//             },
+//             {
+//                 image: require('../../assets/images/hotspots/platypus.png'),
+//               },
+//             {
+//              image: require('../../assets/images/hotspots/koala2.png'),
+//             },
+//             {
+//                 image: require('../../assets/images/hotspots/echidna2.png'),
+//               },
+//             {
+//              image: require('../../assets/images/hotspots/kangaroo2.png'),
+//             },
+//             {
+//                 image: require('../../assets/images/hotspots/koala3.png'),
+//               },
+//             {
+//              image: require('../../assets/images/hotspots/wallaby3.png'),
+//             },
+//             {
+//                 image: require('../../assets/images/hotspots/wombat2.png'),
+//               },
+//               {
+//                 image: require('../../assets/images/hotspots/koala4.png'),
+//               },
+//               {
+//                 image: require('../../assets/images/hotspots/kangaroo3.png'),
+//               },
+//               {
+//                 image: require('../../assets/images/hotspots/wombat3.png'),
+//               },
+//               {
+//                 image: require('../../assets/images/hotspots/koala5.png'),
+//               },
+//               {
+//                 image: require('../../assets/images/hotspots/kangaroo4.png'),
+//               },
+//               {
+//                 image: require('../../assets/images/hotspots/wombat4.png'),
+//               },
+//               {
+//                 image: require('../../assets/images/hotspots/koala6.png'),
+//               },
+//               {
+//                 image: require('../../assets/images/hotspots/echidna3.png'),
+//               },
+            
+//           ]
+//         }
+//     }
+
+//     _renderItem({item,index}){
+//         return (
+//           <View style={{
+//               borderRadius: 5,
+//               height: 300,  
+//               padding: 50,
+//               marginLeft: 10,
+//               }}>
+//             <Image source={item.image} style={{width: '100%', height: '100%'}} resizeMode='contain' />
+//           </View>
+//         )
+//     }
+
+//     render() {
+//         return (
+//           <SafeAreaView style={{flex: 1, paddingTop: 50, }}>
+//             <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', }}>
+//                 <Carousel
+//                   layout={"default"} 
+//                   ref={ref => this.carousel = ref}
+//                   data={this.state.carouselItems}
+//                   sliderWidth={400}  
+//                   itemWidth={400}  
+//                   renderItem={this._renderItem}
+//                   onSnapToItem = { index => this.setState({activeIndex:index}) } />
+//             </View>
+//           </SafeAreaView>
+//         );
+//     }
 // }
+
 
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1,
+//     position: 'relative',
 //     alignItems: 'center',
-//     justifyContent: 'center',
+// 	justifyContent: 'center',
 //   },
+//   guideImage: {
+//     width: 400,
+//     height: 100,
+//   },
+
+//   hotspotImage:{
+//     width: '100%',
+//     height: undefined,
+//     aspectRatio: 1,
+//   },
+
+//   link: {
+//     width: '100%',
+//     height: 150,
+// 	top: 140,
+// 	position: 'absolute',
+//     borderRadius: 20, 
+// 	alignItems: 'center',
+//     left:10
+//   },
+
+//   hotspotContainer: {
+//     width: '93%',
+//     height: 300,
+//     // position: 'absolute',
+//     top: -60,
+//     left: 5
+//   },
+
+//   recentContainer: {
+//     width: '93%',
+//     height: 300,
+//     position: 'absolute',
+//     top: 450,
+//     left: 18
+//   },
+
 //   verticalSpacer: {
 //     height: 20,
 //   },
-//   title: {
-//     fontSize: 30,
-//     fontWeight: 'bold',
+
+//   loadingImage: {
+//     width: '100%',
+//     height: '100%',
 //   },
-//   row: {
-//     flexDirection: 'row',
-//     backgroundColor: '#FFFFCC',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     width: 350,
-//     height: 100,
-//     borderRadius: 60,
+
+//   slideImage: {
+//     width: 300, 
+//     height: 100, 
+//     marginRight: 10, 
 //   },
-//   link: {
-//     flex: 1, 
-//     alignItems: 'center', 
-//     borderRadius: 70,
-//     paddingVertical: 30,
-//     paddingHorizontal: 30
-//   },
-//   linkText: {
-//     fontSize: 25,
-//     color: 'black',
-//     textAlign: 'center',
-//     fontWeight: 'bold',
-//   },
-//   image: {
-//     width: 150,
-//     height: 100,
-//     resizeMode: 'cover',
-//     borderRadius: 60,
-//     marginLeft: 10,
-//   },
-//   text: {
-//     fontSize: 20,
-//     color: 'purple',
-//     textAlign: 'center',
-//   },
+
 // });

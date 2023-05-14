@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
   },
   row: {
     backgroundColor: '#F9D162',
-
     width: 180,
     height: 200,
     borderRadius: 60,
