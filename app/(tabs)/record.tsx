@@ -11,7 +11,7 @@ import { Camera } from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
 import axios from 'axios';
 import google_api_key from '../../key/google_api_key';
-import { getDocs, collection, onSnapshot, addDoc } from 'firebase/firestore';
+import { getDocs, collection, onSnapshot, addDoc} from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 
 
@@ -201,7 +201,24 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		position: 'absolute',
 		height: 80,
+	},
+
+	uploadContainer1: {
+		borderRadius: 20, 
+		alignItems: 'center',
+		justifyContent: 'center',
+		position: 'absolute',
+		height: 80,
+		width: 200, 
+		top: 250
+	},
+
+	uploadButton: {
+		height: 80,
+		width: 200,
+		position: 'absolute',
 	}
+
 
 	
 
@@ -471,6 +488,7 @@ export default class App extends React.Component {
 							this.state.googleResponse.responses[0].localizedObjectAnnotations,
 							);
 							const detectedAnimal = highestScoringObject.name;
+							console.log(detectedAnimal);
 							if (detectedAnimal === "Animal" || animals.includes(detectedAnimal)) {
 							return (
 								<View style={styles.resultContainer}>
@@ -481,15 +499,44 @@ export default class App extends React.Component {
 										{(highestScoringObject.score.toFixed(2) * 100)}% match
 									</Text>
 
-									<Button
+						
+									<View style={styles.verticalSpacer} />
+
+									<TouchableOpacity
+										style={styles.uploadContainer1}
 										onPress={this.uploadRecord}
-										title="Upload"
-										color="#21C392"
-									/>
+										>
+										<Image
+											source={require('../../assets/images/upload.png')}
+											style={styles.uploadButton}
+											resizeMode="cover"
+										/>
+
+									</TouchableOpacity>
+
+
 								</View>
 							);
 							} else {
-							return <Text>Not match</Text>;
+							return (
+								<View style={styles.resultContainer}>
+									<Image source={require('../../assets/images/noMatch.png')} style={styles.loadingImage} />
+
+									<View style={styles.verticalSpacer} />
+
+									<TouchableOpacity
+										style={styles.uploadContainer1}
+										
+										>
+										<Image
+											source={require('../../assets/images/tryAgain.png')}
+											style={styles.uploadButton}
+											resizeMode="cover"
+										/>
+
+									</TouchableOpacity>
+								</View>
+							);
 							}
 						})()
 						) : null}
@@ -647,9 +694,24 @@ export default class App extends React.Component {
 			"Platypus": "Ornithorhynchus anatinus",
 		  };
 
-		let currentDate = new Date();
+		  let currentDate = new Date();
 
-		let formattedDate = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
+		  let hours = currentDate.getHours();
+		  let minutes = currentDate.getMinutes();
+		  let day = currentDate.getDate();
+		  let month = currentDate.getMonth() + 1; 
+		  let year = currentDate.getFullYear();
+		  
+		  let suffix = hours >= 12 ? 'pm' : 'am';
+		  hours = hours % 12;
+		  hours = hours ? hours : 12; // the hour '0' should be '12'
+		  
+		  minutes = minutes < 10 ? '0' + minutes : minutes;
+		  
+		  let formattedDate = `${hours}:${minutes}${suffix} - ${day}/${month}/${year}`;
+		  
+		  console.log(formattedDate);
+		  
 
 		  
 		const recordData = {
@@ -670,10 +732,8 @@ export default class App extends React.Component {
 			  longitude: recordData.longitude,
 			  fact: recordData.fact
 			});
-		  
 			console.log("Document written with ID: ", docRef.id);
 		  }
-	  
 		addRecord()
 	  };
 }

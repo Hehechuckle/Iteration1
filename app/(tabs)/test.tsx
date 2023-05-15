@@ -2,10 +2,12 @@ import React from 'react';
 import { Image, StyleSheet, Text, View, ImageBackground, SafeAreaView } from 'react-native';
 import { Link, Tabs } from 'expo-router';
 import Carousel from 'react-native-snap-carousel';
+import { getDocs, collection, onSnapshot, addDoc, query, where } from 'firebase/firestore';
+import { db } from '../../firebaseConfig';
+import moment from 'moment';
 
-// Add the images you want to display in the carousel
 const carouselItems = [
-    {
+      {
         image: require('../../assets/images/hotspots/koala1.png'),
       },
       {
@@ -39,8 +41,8 @@ const carouselItems = [
        image: require('../../assets/images/hotspots/wallaby3.png'),
       },
       {
-          image: require('../../assets/images/hotspots/wombat2.png'),
-        },
+        image: require('../../assets/images/hotspots/wombat2.png'),
+      },
         {
           image: require('../../assets/images/hotspots/koala4.png'),
         },
@@ -67,14 +69,29 @@ const carouselItems = [
         },
 ];
 
+interface animal {
+    id: string;
+    name: string;
+    sciname: string;
+    date: string;
+    latitude: number;
+    longitude: number;
+    fact: string;
+  }
+
 export default class TabTwoScreen extends React.Component {
+  
+  
   constructor(props){
     super(props);
     this.state = {
       activeIndex: 0,
-      carouselItems: carouselItems
+      carouselItems: carouselItems,
+      recordData: [] 
     }
   }
+
+  
 
   _renderItem({item,index}){
     return (
@@ -90,7 +107,59 @@ export default class TabTwoScreen extends React.Component {
     )
   }
 
+    async getRecord() {
+        const q = query(collection(db, "Animals2.2"), where("fact", "==", "User Record"));
+        const querySnapshot = await getDocs(q);
+    
+        // Array to store the records
+        let records = [];
+    
+        querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        
+        const dateObj = moment(data.date, "h:mma - DD/MM/YYYY");
+    
+        records.push({
+            ...data,
+            date: dateObj
+        });
+        });
+
+        records.sort((a, b) => b.date - a.date);
+    
+        records = records.slice(0, 3);
+    
+        // console.log(records);
+
+        this.setState({ recordData: records });
+    }
+    
+    componentDidMount() {
+        this.getRecord();
+    }
+
+
   render() {
+
+    const recordIcon = (animalName: string) => {
+        switch (animalName) {
+          case 'Eastern Grey Kangaroo':
+            return require('../../assets/images/icon/kangaroo2.png');
+          case 'Koala':
+            return require('../../assets/images/icon/koala2.png');
+          case 'Platypus':
+            return require('../../assets/images/icon/platypus2.png');
+          case 'Short-beaked Echidna':
+            return require('../../assets/images/icon/echidna2.png');
+          case 'Swamp Wallaby':
+            return require('../../assets/images/icon/wallaby2.png');
+          case 'Common Wombat':
+            return require('../../assets/images/icon/wombat2.png');
+          default:
+            return require('../../assets/images/icon/koala2.png'); 
+        }
+      };
+
     return (
       <ImageBackground
         source={require('../../assets/images/background1.png')}
@@ -115,7 +184,13 @@ export default class TabTwoScreen extends React.Component {
 
             <View style={styles.recentContainer}>
                 <ImageBackground source={require('../../assets/images/spot.png')} style={styles.hotspotImage} resizeMode='contain'>
-                  
+                    {this.state.recordData.map((record, index) => (
+                        <View key={index} style={styles.record}>
+                            <Text style={styles.recordText}>{record.name} {'\n'}{moment(record.date).locale('en').format('h:mm a - DD/MM/YYYY')}</Text> 
+
+                            <Image source={recordIcon(record.name)} style={styles.icon} />
+                        </View>
+                    ))}            
                 </ImageBackground>
             </View>
           </View>
@@ -124,7 +199,7 @@ export default class TabTwoScreen extends React.Component {
   }
 }
 
-// Add your styles here
+
 
 const styles = StyleSheet.create({
   container: {
@@ -183,6 +258,32 @@ const styles = StyleSheet.create({
     width: 300, 
     height: 100, 
     marginRight: 10, 
+  },
+
+  record: {
+    width: '90%',
+    height: 60,
+    top: 90,
+    left: 10,
+    backgroundColor: '#F9D162', 
+	paddingVertical: 10, 
+	paddingHorizontal: 20, 
+	borderRadius: 20, 
+	alignItems: 'center',
+	margin: 5,
+	flexDirection: 'row', 
+    justifyContent: 'space-between', 
+  },
+
+  recordText: {
+    color: 'black', 
+    fontSize: 16, 
+    fontWeight: 'bold',
+    },
+  icon: {
+    width: 50,  
+    height: 50, 
+    resizeMode: 'contain', 
   },
 
 });
