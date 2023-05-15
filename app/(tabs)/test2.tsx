@@ -212,10 +212,10 @@
 
 //   const [open, setOpen] = useState(false);
 
-//   const [value, setValue] = useState(['koala', 'Eastern Grey Kangaroo', 'Swamp Wallaby', 'Common Wombat', 'Short-beaked Echidna', 'Platypus']);
+//   const [value, setValue] = useState(['Koala', 'Eastern Grey Kangaroo', 'Swamp Wallaby', 'Common Wombat', 'Short-beaked Echidna', 'Platypus']);
   
 //   const [items, setItems] = useState([
-//     { label: 'Koala', value: 'koala' },
+//     { label: 'Koala', value: 'Koala' },
 //     { label: 'Kangaroo', value: 'Eastern Grey Kangaroo' },
 //     { label: 'Wallaby', value: 'Swamp Wallaby' },
 //     { label: 'Wombat', value: 'Common Wombat' },
@@ -232,7 +232,7 @@
 
 //   const getAnimalIcon = (animalName: string) => {
 //     switch (animalName) {
-//       case 'koala':
+//       case 'Koala':
 //         return require('../../assets/images/icon/koala.png');
 //       case 'Eastern Grey Kangaroo':
 //         return require('../../assets/images/icon/kangaroo.png');

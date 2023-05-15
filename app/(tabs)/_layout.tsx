@@ -27,13 +27,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Map',
-          tabBarIcon: ({ color }) => (
-            <Image
-              source={require('../../assets/images/map.png')}
-              style={{ width: 24, height: 24, tintColor: color }}
-            />
-          ),
+          title: 'Home',
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
@@ -50,7 +45,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      {/* <Tabs.Screen
+      <Tabs.Screen
         name="map"
         options={{
           title: 'Map',
@@ -61,14 +56,14 @@ export default function TabLayout() {
             />
           ),
         }}
-      /> */}
-      <Tabs.Screen
+      />
+      {/* <Tabs.Screen
         name="test"
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="two"
         options={{

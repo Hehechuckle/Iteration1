@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
 import { Link, Tabs } from 'expo-router';
 
 export default function TabTwoScreen() {
@@ -7,89 +7,101 @@ export default function TabTwoScreen() {
       console.log('Image clicked!');
   };
 
+  
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>       Native Australian Species</Text>
-      <View style={styles.verticalSpacer} />
-      <View style={styles.rowContainer}>
-        <View style={styles.row}>
-          <Link href="/koala" style={styles.link}>
-            <Image source={require('../../assets/images/icon/koala.png')} style={styles.image} />
-        </Link>
-      </View>
-      <View style={styles.row}>
-        <Link href="/kangaroo" style={styles.link}>
-          <Image source={require('../../assets/images/icon/kangaroo.png')} style={styles.image} />
-        </Link>
-      </View>
-    </View>
-    <View style={styles.rowContainer}>
-      <View style={styles.row}>
-        <Link href="/wallaby" style={styles.link}>
-          <Image source={require('../../assets/images/icon/wallaby.png')} style={styles.image} />
-        </Link>
-      </View>
-      <View style={styles.row}>
-        <Link href="/platypus" style={styles.link}>
-          <Image source={require('../../assets/images/icon/platypus.png')} style={styles.image} />
-        </Link>
-      </View>
-    </View>
-      <View style={styles.rowContainer}>
-        <View style={styles.row}>
-          <Link href="/wombats" style={styles.link}>
-            <Image source={require('../../assets/images/icon/wombat.png')} style={styles.image} />
-          </Link>
-        </View>
-        <View style={styles.row}>
-          <Link href="/echidnas" style={styles.link}>
-            <Image source={require('../../assets/images/icon/echidna.png')} style={styles.image} />
-          </Link>
+    <ImageBackground source={require('../../assets/images/icon/background.png')} style={styles.background} >
+      <View style={styles.container}>
+      <View style={[styles.rowContainer, { marginTop: 20 }]}>
+        <View style={styles.rowContainer}>
+          <View style={styles.row}>
+            <Link href="/koala" style={styles.link}>
+              <Image source={require('../../assets/images/icon/koala_button.png')} style={[styles.image, { width: 380, height: 100}]} resizeMode='contain' />
+            </Link>
+          </View>
         </View>
         </View>
-    </View>
+        <View style={styles.rowContainer}>
+          <View style={styles.row}>
+            <Link href="/kangaroo" style={styles.link}>
+              <Image source={require('../../assets/images/icon/Kangaroo_Button.png')} style={[styles.image, { width: 380, height: 100}]} resizeMode='contain' />
+            </Link>
+          </View>
+        </View>
+        <View style={styles.rowContainer}>
+          <View style={styles.row}>
+            <Link href="/wallaby" style={styles.link}>
+              <Image source={require('../../assets/images/icon/Wallaby_button.png')} style={[styles.image, { width: 380, height: 100}]} resizeMode='contain' />
+            </Link>
+          </View>
+        </View>
+        <View style={styles.rowContainer}>
+          <View style={styles.row}>
+            <Link href="/platypus" style={styles.link}>
+              <Image source={require('../../assets/images/icon/Platypus_button.png')} style={[styles.image, { width: 380, height: 100}]} resizeMode='contain' />
+            </Link>
+          </View>
+        </View>
+        <View style={styles.rowContainer}>
+          <View style={styles.row}>
+            <Link href="/wombats" style={styles.link}>
+              <Image source={require('../../assets/images/icon/Wombat_Button.png')} style={[styles.image, { width: 380, height: 100}]} resizeMode='contain' />
+            </Link>
+          </View>
+        </View>
+        <View style={styles.rowContainer}>
+          <View style={styles.row}>
+            <Link href="/echidnas" style={styles.link}>
+              <Image source={require('../../assets/images/icon/Echidna_button.png')} style={[styles.image, { width: 380, height: 100 }]} resizeMode='contain' />
+            </Link>
+          </View>
+        </View>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    width: '100%',
+    height: '100%',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
     paddingHorizontal: 10,
     paddingVertical: 60,
   },
   rowContainer: {
     flexDirection: 'row',
-    marginVertical: 10,
+    justifyContent: 'space-between',
+    marginVertical: 2,
+    alignItems: 'center', 
+    
   },
   row: {
-    backgroundColor: '#F9D162',
-    width: 180,
-    height: 200,
+    width: 400,
+    height: 100,
     borderRadius: 60,
     paddingHorizontal: 10,
-    marginLeft: 10,
-    marginRight: 10,
+    marginLeft: 5,
+    marginRight: 5,
     paddingVertical: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   link: {
-    width: 180,
-    height: 180,
-    left: 40,
-		top: 0,
+    width: 400,
+    height: 200,
+    left: 0,
+    top: 0,
     position: 'absolute',
   },
   image: {
-    width: 100,
-    height: 100,
-  },
-  title: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color:'#21C392',
-  },
-  verticalSpacer: {
-    height: 20,
+    width: 400,
+    height: 200,
+    alignItems: 'center',
+    marginLeft: 50,
+    resizeMode: 'cover',
+    borderRadius: 10,
   },
 });
 

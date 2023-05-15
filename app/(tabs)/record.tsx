@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator,Button,Clipboard,FlatList,Image,Share,StyleSheet,Text,ScrollView,View,TouchableHighlight, ImageBackground
+import {ActivityIndicator,Button,Clipboard,FlatList,Image,Share,StyleSheet,Text,ScrollView,View,TouchableHighlight, ImageBackground, RefreshControl
 } from 'react-native';
 import { Dimensions} from 'react-native';
 const deviceWidth = Dimensions.get('screen').width;
@@ -224,22 +224,28 @@ const styles = StyleSheet.create({
 
 });
 
+const initialState = {
+	image: null,
+	uploading: false,
+	googleResponse: null,
+	location: null,
+	region: null,
+	isImageSelected: false,
+	selectedAnimal: null,
+	showButtons: true,
+	latitude: null,
+	longitude: null,
+	refreshKey: 0,
+  };
+
 
 export default class App extends React.Component {
 
-	
-	state = {
-		image: null,
-		uploading: false,
-		googleResponse: null as { responses: { labelAnnotations?: { description: string }[], localizedObjectAnnotations?: { name: string, score: number }[] }[] } | null,
-		location: null,
-  		region: null,
-		isImageSelected: false,
-		selectedAnimal: null,
-		showButtons:true,
-		latitude: null,
-  		longitude: null,
-	  };
+	state = initialState;
+
+	resetState = () => {
+		this.setState(initialState);
+	};
 	  
 	async componentDidMount() {
 		await Camera.requestCameraPermissionsAsync();
@@ -504,7 +510,10 @@ export default class App extends React.Component {
 
 									<TouchableOpacity
 										style={styles.uploadContainer1}
-										onPress={this.uploadRecord}
+										onPress={() => {
+											this.uploadRecord();  
+											this.resetState();
+										  }}
 										>
 										<Image
 											source={require('../../assets/images/upload.png')}
@@ -518,6 +527,7 @@ export default class App extends React.Component {
 								</View>
 							);
 							} else {
+
 							return (
 								<View style={styles.resultContainer}>
 									<Image source={require('../../assets/images/noMatch.png')} style={styles.loadingImage} />
@@ -527,6 +537,7 @@ export default class App extends React.Component {
 									<TouchableOpacity
 										style={styles.uploadContainer1}
 										
+										onPress={this.resetState}
 										>
 										<Image
 											source={require('../../assets/images/tryAgain.png')}

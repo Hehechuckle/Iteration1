@@ -1,58 +1,28 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View, Button } from 'react-native';
-import { Link, Tabs, useRouter } from 'expo-router';
+import { Image, StyleSheet, View, Dimensions } from 'react-native';
 
-export default function KoalaInfoScreen() {
+export default function MyScreen() {
+  const windowHeight = Dimensions.get('window').height;
+  const imageAspectRatio = 2 / 1; // Example aspect ratio, replace with your own.
+  const imageWidth = windowHeight * imageAspectRatio;
 
-    const router = useRouter();
-    return (
-        <View style={styles.container}>
-        <Text style={styles.title}>Swamp Wallaby</Text>
-        <Text style={styles.text}>
-        <Text style={{ fontStyle: 'italic' }}>(Wallabia bicolor)</Text>
-        </Text>
-        <Image source={require('../assets/images/wallaby.png')} style={styles.image} />
-        <Text style={styles.text}>Avg. Weight: 15kg</Text>
-        <Text style={styles.text}>Avg. Height: 73cm</Text>
-        <Text style={styles.text}>Top Speed: 70km/h</Text>
-        <Text style={styles.text}>Life Span: 15+ years{'\n'}</Text>
-        <Text style={[styles.text, {textAlign: 'left'}]}>
-        Swamp Wallabies are most active at night and have eyes well adapted to low light.{'\n\n'}
-        Diet: Swamp Wallabies feed on grasses, leaves, bark, and shrubs.​{'\n\n'}
-        Population: 10,000 (Near Threatened)
-        </Text>
-
-        </View>
-    );
+  return (
+    <View style={styles.container}>
+      <Image source={require('../assets/images/icon/wallaby_page.png')} style={[styles.image, {width: imageWidth, height: '85%',left:5}]} resizeMode="contain"/>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F5F5F5',
     alignItems: 'center',
-    paddingTop: 20,
-    backgroundColor: '#F9D162',
+    justifyContent: 'center',
   },
-  verticalSpacer: {
-    height: 20,
-  },
-
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-
-  myImageStyle: {
-    resizeMode: 'center',
-  },
-
   image: {
-    alignSelf: 'center',
-    height : 300,
-    width: 300, 
-  },
-  text: {
-    fontSize: 20,
-    textAlign: 'center',
-  },
+    height:'100%',
+    borderWidth: 1,
+    borderColor: 'black',
+  }
 });
