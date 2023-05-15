@@ -489,7 +489,7 @@ export default class App extends React.Component {
 							);
 							const detectedAnimal = highestScoringObject.name;
 							console.log(detectedAnimal);
-							if (detectedAnimal === "Animal" || animals.includes(detectedAnimal)) {
+							if (detectedAnimal === "Animal" || detectedAnimal === "Otter" ||animals.includes(detectedAnimal)) {
 							return (
 								<View style={styles.resultContainer}>
 									<Image source={getAnimalImage(this.state.selectedAnimal)} style={styles.loadingImage} />

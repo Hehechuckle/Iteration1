@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View, ImageBackground, SafeAreaView } from 'react-native';
+import { Image, StyleSheet, Text, View, ImageBackground, SafeAreaView, Linking, TouchableOpacity } from 'react-native';
 import { Link, Tabs } from 'expo-router';
 import Carousel from 'react-native-snap-carousel';
 import { getDocs, collection, onSnapshot, addDoc, query, where } from 'firebase/firestore';
@@ -184,13 +184,31 @@ export default class TabTwoScreen extends React.Component {
 
             <View style={styles.recentContainer}>
                 <ImageBackground source={require('../../assets/images/spot.png')} style={styles.hotspotImage} resizeMode='contain'>
-                    {this.state.recordData.map((record, index) => (
-                        <View key={index} style={styles.record}>
-                            <Text style={styles.recordText}>{record.name} {'\n'}{moment(record.date).locale('en').format('h:mm a - DD/MM/YYYY')}</Text> 
+                {this.state.recordData.map((record, index) => (
+                    <View key={index} style={styles.record}>
+                        <Text style={styles.recordText}>{record.name} {'\n'}{moment(record.date).locale('en').format('h:mm a - DD/MM/YYYY')}</Text> 
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <TouchableOpacity
+                                style={{ marginRight: 10, marginTop: 5 }}
+                                onPress={() => {
+                                    let url = `http://maps.google.com/?q=${record.latitude},${record.longitude}`;
 
+                                    Linking.canOpenURL(url)
+                                        .then((supported) => {
+                                            if (supported) {
+                                                return Linking.openURL(url);
+                                            } else {
+                                                console.log(`Don't know how to open URL: ${url}`);
+                                            }
+                                        })
+                                        .catch((err) => console.error('An error occurred', err));
+                                }}>
+                                <Image source={require('../../assets/images/icon/location3.png')} style={styles.icon} />
+                            </TouchableOpacity>
                             <Image source={recordIcon(record.name)} style={styles.icon} />
                         </View>
-                    ))}            
+                    </View>
+                ))}         
                 </ImageBackground>
             </View>
           </View>
@@ -264,14 +282,13 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 60,
     top: 90,
-    left: 10,
-    backgroundColor: '#F9D162', 
-	paddingVertical: 10, 
-	paddingHorizontal: 20, 
-	borderRadius: 20, 
-	alignItems: 'center',
-	margin: 5,
-	flexDirection: 'row', 
+    left: 10, 
+	  paddingVertical: 10, 
+	  paddingHorizontal: 20, 
+	  borderRadius: 20, 
+	  alignItems: 'center',
+	  margin: 5,
+	  flexDirection: 'row', 
     justifyContent: 'space-between', 
   },
 
@@ -280,6 +297,7 @@ const styles = StyleSheet.create({
     fontSize: 16, 
     fontWeight: 'bold',
     },
+    
   icon: {
     width: 50,  
     height: 50, 
