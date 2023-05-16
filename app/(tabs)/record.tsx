@@ -496,7 +496,7 @@ export default class App extends React.Component {
 				{this.state.showButtons ? (
 					<View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around' }}>
 						{animals.map((animal, index) => (
-						<View key={index} style={{ width: '45%', margin: 10 }}>
+						<View key={index} style={{ width: '42%', margin: 10 }}>
 							<TouchableOpacity
 							style={styles.buttonContainer}
 							onPress={() => this.handleAnimalSelection(animal)}
@@ -580,7 +580,7 @@ export default class App extends React.Component {
 
 							return (
 								<View style={styles.resultContainer}>
-									<Image source={require('../../assets/images/noMatch.png')} style={styles.loadingImage} />
+									<Image source={require('../../assets/images/noMatch.png')} style={styles.loadingImage} resizeMode="contain" />
 
 									<View style={styles.verticalSpacer} />
 
@@ -592,7 +592,7 @@ export default class App extends React.Component {
 										<Image
 											source={require('../../assets/images/tryAgain.png')}
 											style={styles.uploadButton}
-											resizeMode="cover"
+											resizeMode="contain"
 										/>
 
 									</TouchableOpacity>

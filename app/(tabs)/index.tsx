@@ -168,7 +168,7 @@ export default class TabTwoScreen extends React.Component {
         source={require('../../assets/images/background1.png')}
         style={styles.loadingImage}>
           <View style={styles.container}>
-            <Link href="/modal" style={styles.link}>
+            <Link href="/Guide" style={styles.link}>
                 <Image source={require('../../assets/images/guide.png')} style={styles.guideImage} resizeMode='contain'/>
             </Link>
 
@@ -178,8 +178,8 @@ export default class TabTwoScreen extends React.Component {
                     layout={"default"} 
                     ref={ref => this.carousel = ref}
                     data={this.state.carouselItems}
-                    sliderWidth={400}
-                    itemWidth={400}
+                    sliderWidth={windowWidth}
+                    itemWidth={windowWidth*0.95}
                     renderItem={this._renderItem}
                     onSnapToItem = { index => this.setState({activeIndex:index}) } />
                 </ImageBackground>
