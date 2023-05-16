@@ -57,13 +57,13 @@ export default function TabLayout() {
           ),
         }}
       />
-      {/* <Tabs.Screen
-        name="test"
+      <Tabs.Screen
+        name="record"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          title: 'Record',
+          tabBarIcon: ({ color }) => <TabBarIcon name="camera" color={color} />,
         }}
-      /> */}
+      />
       <Tabs.Screen
         name="two"
         options={{
@@ -76,13 +76,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="record"
-        options={{
-          title: 'Record',
-          tabBarIcon: ({ color }) => <TabBarIcon name="camera" color={color} />,
-        }}
-      />
+      
     </Tabs>
   );
 }

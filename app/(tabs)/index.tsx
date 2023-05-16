@@ -1,10 +1,13 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View, ImageBackground, SafeAreaView, Linking, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, View, ImageBackground, SafeAreaView, Linking, TouchableOpacity, Dimensions} from 'react-native';
 import { Link, Tabs } from 'expo-router';
 import Carousel from 'react-native-snap-carousel';
 import { getDocs, collection, onSnapshot, addDoc, query, where } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 import moment from 'moment';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const carouselItems = [
       {
@@ -224,43 +227,44 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
     alignItems: 'center',
-	justifyContent: 'center',
+	  justifyContent: 'center',
   },
   guideImage: {
-    width: 400,
-    height: 100,
+    width: windowWidth * 0.95,
+    height: windowHeight * 0.15,
+  },
+
+  link: {
+    width: windowWidth * 0.95,
+    height: windowHeight * 0.19,
+	  top: "10%",
+	  position: 'absolute',
+    borderRadius: 20, 
+	  
+    left:"4%"
   },
 
   hotspotImage:{
-    width: '100%',
+    width: windowWidth * 0.95,
     height: undefined,
     aspectRatio: 1,
   },
 
-  link: {
-    width: '100%',
-    height: 150,
-	top: 140,
-	position: 'absolute',
-    borderRadius: 20, 
-	alignItems: 'center',
-    left:10
-  },
+
 
   hotspotContainer: {
-    width: '93%',
-    height: 300,
-    // position: 'absolute',
-    top: -60,
-    left: 5
+    width: windowWidth * 0.95,
+    height: windowHeight * 0.3,
+    top: '-11%',
+    left: '1%'
   },
 
   recentContainer: {
-    width: '93%',
-    height: 300,
+    width: windowWidth * 0.95,
+    height: windowHeight * 0.4,
     position: 'absolute',
-    top: 450,
-    left: 18
+    top: '55%',
+    left: '4%'
   },
 
   verticalSpacer: {
@@ -272,17 +276,11 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 
-  slideImage: {
-    width: 300, 
-    height: 100, 
-    marginRight: 10, 
-  },
-
   record: {
-    width: '90%',
-    height: 60,
-    top: 90,
-    left: 10, 
+    width: windowWidth * 0.9,
+    height: windowHeight * 0.07,
+    top: '25%',
+    left: '0%', 
 	  paddingVertical: 10, 
 	  paddingHorizontal: 20, 
 	  borderRadius: 20, 

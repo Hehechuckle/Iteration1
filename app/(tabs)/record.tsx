@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: '100%',
 	},
+
 	buttonContainer: {
 		backgroundColor: '#F9D162', 
 		paddingVertical: 10, 
@@ -217,10 +218,33 @@ const styles = StyleSheet.create({
 		height: 80,
 		width: 200,
 		position: 'absolute',
-	}
+	},
 
+	backContainer: {
+		height: '10%',
+		width: '8%',
+		position: 'absolute',
+		top: '-200%',
+		left: 0
 
-	
+	},
+
+	backButton: {
+		height: 70,
+		width: 120,
+		position: 'absolute',
+		
+	},
+	messageContainer: {
+		position: 'absolute', 
+		width: 400,
+		height: 300,
+	  },
+	  
+	messageImage: {
+		width: 400,
+		height: 300,
+	},
 
 });
 
@@ -236,6 +260,7 @@ const initialState = {
 	latitude: null,
 	longitude: null,
 	refreshKey: 0,
+	showMessage: false,
   };
 
 
@@ -498,8 +523,20 @@ export default class App extends React.Component {
 							if (detectedAnimal === "Animal" || detectedAnimal === "Otter" ||animals.includes(detectedAnimal)) {
 							return (
 								<View style={styles.resultContainer}>
-									<Image source={getAnimalImage(this.state.selectedAnimal)} style={styles.loadingImage} />
+									<TouchableOpacity
+										style={styles.backContainer}
+										onPress={() => {
+											this.resetState();
+										  }}
+										>
+										<Image
+											source={require('../../assets/images/goBack.png')}
+											style={styles.backButton}
+											resizeMode="contain"
+										/>
+									</TouchableOpacity>
 
+									<Image source={getAnimalImage(this.state.selectedAnimal)} style={styles.loadingImage} resizeMode="contain"/>
 									<View style={styles.verticalSpacer} />
 									<Text style={styles.resultText}>
 										{(highestScoringObject.score.toFixed(2) * 100)}% match
@@ -510,10 +547,7 @@ export default class App extends React.Component {
 
 									<TouchableOpacity
 										style={styles.uploadContainer1}
-										onPress={() => {
-											this.uploadRecord();  
-											this.resetState();
-										  }}
+										onPress={this.uploadRecord.bind(this)}
 										>
 										<Image
 											source={require('../../assets/images/upload.png')}
@@ -522,6 +556,22 @@ export default class App extends React.Component {
 										/>
 
 									</TouchableOpacity>
+									{this.state.showMessage && (
+										<TouchableOpacity
+										style={styles.messageContainer}
+										onPress={() => {
+											this.resetState();
+											this.setState({ showMessage: false });
+										}}
+										>
+										<Image
+											source={require('../../assets/images/cong.png')}
+											style={styles.messageImage}
+											resizeMode="contain"
+										/>
+										
+										</TouchableOpacity>
+									)}
 
 
 								</View>
@@ -746,7 +796,10 @@ export default class App extends React.Component {
 			console.log("Document written with ID: ", docRef.id);
 		  }
 		addRecord()
+		this.setState({ showMessage: true });
 	  };
+
+	  
 }
 
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MapView, { Callout, CalloutSubview, Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
-import { StyleSheet, View, Text, TextInput, StatusBar, Button, TouchableOpacity, Image, Modal } from 'react-native';
+import { StyleSheet, View, Text, TextInput, StatusBar, Button, TouchableOpacity, Image, Modal, Dimensions } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location';
 import { getDocs, collection, onSnapshot } from 'firebase/firestore';
@@ -176,6 +176,8 @@ export default function App() {
   const [filteredAnimals, setFilteredAnimals] = useState<animal[]>([]);
 
   const [safetyMessageVisible, setSafetyMessageVisible] = useState(true);
+
+  const windowHeight = Dimensions.get('window').height;
 
   const onSafetyMessageDismiss = () => {
     setSafetyMessageVisible(false);
@@ -438,7 +440,7 @@ export default function App() {
         marginRight: '3%', 
         marginLeft: '2%', 
         flex: 0,
-        top : 750,
+        top: windowHeight * 0.865,
       }}>
         <DropDownPicker
           open={open}

@@ -1,35 +1,75 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
+import React, { Component } from 'react'
+import { Text, View, Image, Dimensions } from 'react-native'
+import Swiper from 'react-native-swiper'
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+const { width } = Dimensions.get('window')
 
-export default function ModalScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Modal</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/modal.tsx" />
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-    </View>
-  );
+const styles = {
+  wrapper: {},
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold'
+  },
+  image: {
+    width: '100%',
+    flex: 1, // Added this
+  },
+  paginationStyle: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10
+  },
+  paginationText: {
+    color: 'green',
+    fontSize: 20
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+const renderPagination = (index, total, context) => {
+  return (
+    <View style={styles.paginationStyle}>
+      <Text style={{ color: 'grey' }}>
+        <Text style={styles.paginationText}>{index + 1}</Text>/{total}
+      </Text>
+    </View>
+  )
+}
+
+export default class extends Component {
+  render() {
+    return (
+      <Swiper
+        style={styles.wrapper}
+        renderPagination={renderPagination}
+        loop={false}
+      >
+        <View
+          style={styles.slide}
+        >
+          <Image style={styles.image} source={require('../assets/images/Guide1.png')} resizeMode="contain" />
+        </View>
+        <View
+          style={styles.slide}
+        >
+          <Image style={styles.image} source={require('../assets/images/Guide2.png')} resizeMode="contain" />
+        </View>
+        <View
+          style={styles.slide}
+        >
+          <Image style={styles.image} source={require('../assets/images/Guide3.png')} resizeMode="contain" />
+        </View>
+        <View
+          style={styles.slide}
+        >
+          <Image style={styles.image} source={require('../assets/images/Guide4.png')} resizeMode="contain" />
+        </View>
+      </Swiper>
+    )
+  }
+}
