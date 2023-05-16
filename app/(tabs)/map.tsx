@@ -274,7 +274,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    const animal = collection(db, 'Animals2.2')
+    const animal = collection(db, 'Animals2.6')
     const record = onSnapshot(animal,{
       next: (snapshot) => {
         const animalData: animal[]=[];

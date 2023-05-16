@@ -257,8 +257,8 @@ const initialState = {
 	isImageSelected: false,
 	selectedAnimal: null,
 	showButtons: true,
-	latitude: null,
-	longitude: null,
+	latitude: 0,
+	longitude: 0,
 	refreshKey: 0,
 	showMessage: false,
   };
@@ -272,30 +272,34 @@ export default class App extends React.Component {
 		this.setState(initialState);
 	};
 	  
-	async componentDidMount() {
+	componentDidMount() {
+		this.loadPermissionsAndLocation();
+	  }
+	
+	loadPermissionsAndLocation = async () => {
 		await Camera.requestCameraPermissionsAsync();
 		await MediaLibrary.requestPermissionsAsync();
 		await ImagePicker.requestCameraPermissionsAsync();
-
+	
 		let { status } = await Location.requestForegroundPermissionsAsync();
-  
+	  
 		if (status !== 'granted') {
-			console.log('Permission to access location was denied');
-			return;
+		  console.log('Permission to access location was denied');
+		  return;
 		}
-
+	
 		let location = await Location.getCurrentPositionAsync({});
 		
 		this.setState({
-			latitude: location.coords.latitude,
-			longitude: location.coords.longitude,
+		  latitude: location.coords.latitude,
+		  longitude: location.coords.longitude,
 		});
-	}
+	  }
 
 
 
 	render() { 
-		let { image, region } = this.state;
+		let { image } = this.state;
 		return (
 		  <ImageBackground
 			source={require('../../assets/images/recordImage.png')}
@@ -527,6 +531,7 @@ export default class App extends React.Component {
 										style={styles.backContainer}
 										onPress={() => {
 											this.resetState();
+											this.componentDidMount()
 										  }}
 										>
 										<Image
@@ -562,6 +567,7 @@ export default class App extends React.Component {
 										onPress={() => {
 											this.resetState();
 											this.setState({ showMessage: false });
+											this.componentDidMount()
 										}}
 										>
 										<Image
@@ -587,7 +593,10 @@ export default class App extends React.Component {
 									<TouchableOpacity
 										style={styles.uploadContainer1}
 										
-										onPress={this.resetState}
+										onPress={() => {
+											this.resetState();
+											this.componentDidMount()
+										  }}
 										>
 										<Image
 											source={require('../../assets/images/tryAgain.png')}
@@ -778,14 +787,14 @@ export default class App extends React.Component {
 		const recordData = {
 		  name: officialAnimalNames[selectedAnimal],
 		  sciname: scientificAnimalNames[selectedAnimal],
-		  latitude: this.state.latitude,
-    	  longitude: this.state.longitude,
+		  latitude: this.state.latitude + Math.random() * (0.001 - 0.000001) + 0.000001,
+  		  longitude: this.state.longitude + Math.random() * (0.001 - 0.000001) + 0.000001,
 		  date: formattedDate, 
 		  fact: "User Record"
 		};
 
 		async function addRecord() {
-			const docRef = await addDoc(collection(db, "Animals2.2"), {
+			const docRef = await addDoc(collection(db, "Animals2.6"), {
 			  name: recordData.name,
 			  sciname: recordData.sciname,
 			  date: recordData.date,

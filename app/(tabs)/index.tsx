@@ -111,7 +111,7 @@ export default class TabTwoScreen extends React.Component {
   }
 
     async getRecord() {
-        const q = query(collection(db, "Animals2.2"), where("fact", "==", "User Record"));
+        const q = query(collection(db, "Animals2.6"), where("fact", "==", "User Record"));
         const querySnapshot = await getDocs(q);
     
         // Array to store the records
