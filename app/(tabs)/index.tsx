@@ -100,9 +100,8 @@ export default class TabTwoScreen extends React.Component {
     return (
       <View style={{
         borderRadius: 5,
-        height: 250,
-        // padding: 50,
-        marginTop: 80,
+        height: windowHeight * 0.15,
+        top:60,
         marginLeft: 15,
         marginRight: 35, }}>
         <Image source={item.image} style={{width: '100%', height: '100%'}} resizeMode='contain' />
@@ -131,8 +130,7 @@ export default class TabTwoScreen extends React.Component {
         records.sort((a, b) => b.date - a.date);
     
         records = records.slice(0, 3);
-    
-        // console.log(records);
+  
 
         this.setState({ recordData: records });
     }
@@ -168,25 +166,30 @@ export default class TabTwoScreen extends React.Component {
         source={require('../../assets/images/background1.png')}
         style={styles.loadingImage}>
           <View style={styles.container}>
-            <Link href="/Guide" style={styles.link}>
-                <Image source={require('../../assets/images/guide.png')} style={styles.guideImage} resizeMode='contain'/>
-            </Link>
+
+            <View style={styles.guideContainer}>
+              <Link href="/Guide" style={styles.link}>
+                <Image source={require('../../assets/images/guide.png')} style={{...styles.guideImage, width: windowWidth * 0.95, height: windowHeight * 0.12}} resizeMode='contain' />
+              </Link>
+            </View>
 
             <View style={styles.hotspotContainer}>
                 <ImageBackground source={require('../../assets/images/spot1.png')} style={styles.hotspotImage} resizeMode='contain'>
-                  <Carousel
+                <Carousel
                     layout={"default"} 
                     ref={ref => this.carousel = ref}
                     data={this.state.carouselItems}
                     sliderWidth={windowWidth}
                     itemWidth={windowWidth*0.95}
                     renderItem={this._renderItem}
-                    onSnapToItem = { index => this.setState({activeIndex:index}) } />
+                    onSnapToItem = { index => this.setState({activeIndex:index}) }
+                    contentContainerCustomStyle={{ paddingVertical: 0 }}  
+                />
                 </ImageBackground>
             </View>
 
             <View style={styles.recentContainer}>
-                <ImageBackground source={require('../../assets/images/spot.png')} style={styles.hotspotImage} resizeMode='contain'>
+                <ImageBackground source={require('../../assets/images/spot.png')} style={styles.recentImage} resizeMode='contain'>
                 {this.state.recordData.map((record, index) => (
                     <View key={index} style={styles.record}>
                         <Text style={styles.recordText}>{record.name} {'\n'}{moment(record.date).locale('en').format('h:mm a - DD/MM/YYYY')}</Text> 
@@ -225,37 +228,45 @@ export default class TabTwoScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
+    // position: 'relative',
     alignItems: 'center',
 	  justifyContent: 'center',
+    paddingHorizontal: '8%',
+    // paddingVertical: '12%',
   },
   guideImage: {
-    width: windowWidth * 0.95,
-    height: windowHeight * 0.15,
+    resizeMode: 'contain',
+    alignItems: 'center',
   },
 
   link: {
-    width: windowWidth * 0.95,
-    height: windowHeight * 0.19,
-	  top: "10%",
-	  position: 'absolute',
-    borderRadius: 20, 
-	  
-    left:"4%"
+    width: '110%',
+    height: '110%',
+    // position: 'absolute',
+    top: 150,
+    left: '1.5%'
   },
 
   hotspotImage:{
-    width: windowWidth * 0.95,
-    height: undefined,
-    aspectRatio: 1,
+    width: '100%',
+    height: '100%',
   },
 
+  recentImage:{
+    width: '100%',
+    height: '100%',
+  },
 
+  guideContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center', 
+  },
 
   hotspotContainer: {
     width: windowWidth * 0.95,
-    height: windowHeight * 0.3,
-    top: '-11%',
+    height: windowHeight * 0.25,
+    top: '-40%',
     left: '1%'
   },
 
@@ -263,7 +274,7 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.95,
     height: windowHeight * 0.4,
     position: 'absolute',
-    top: '55%',
+    top: '57%',
     left: '4%'
   },
 
@@ -279,7 +290,7 @@ const styles = StyleSheet.create({
   record: {
     width: windowWidth * 0.9,
     height: windowHeight * 0.07,
-    top: '25%',
+    top: '20%',
     left: '0%', 
 	  paddingVertical: 10, 
 	  paddingHorizontal: 20, 
@@ -303,4 +314,3 @@ const styles = StyleSheet.create({
   },
 
 });
-

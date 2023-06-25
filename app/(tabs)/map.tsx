@@ -24,6 +24,13 @@ interface animal {
 
 const mapJson = [
   {
+    "featureType": "road",
+    "elementType": "labels",
+    "stylers": [
+        { "visibility": "off" }
+    ]
+  },
+  {
       "featureType": "water",
       "stylers": [
           {
@@ -260,8 +267,7 @@ export default function App() {
       latitude: currentLocation.coords.latitude,
       longitude: currentLocation.coords.longitude,
       // latitudeDelta: 0.0922,
-      // longitudeDelta: 0.0421,
-      latitudeDelta: 0.461,
+      // longitudeDelta: 0.0421,n
       longitudeDelta: 0.2105,
     };
     setRecenteredLocation({
@@ -275,7 +281,7 @@ export default function App() {
 
   useEffect(() => {
     const animal = collection(db, 'Animals2.6')
-    const record = onSnapshot(animal,{
+    onSnapshot(animal,{
       next: (snapshot) => {
         const animalData: animal[]=[];
         snapshot.docs.forEach((doc) => {
@@ -293,7 +299,7 @@ export default function App() {
         setAnimalData(animalData)
       }
     })
-    return () => record();
+    // return () => record();
   },[]);
 
   useEffect(() => {
@@ -310,17 +316,24 @@ export default function App() {
         console.log("Please grant location permissions");
         return;
       }
-      let currentLocation = await Location.getCurrentPositionAsync({});
+      try {
+        let currentLocation = await Location.getCurrentPositionAsync({});
   
       setRegion({
         latitude: currentLocation.coords.latitude,
         longitude: currentLocation.coords.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        // latitudeDelta: 0.0922,
+        // longitudeDelta: 0.0421,
+        latitudeDelta: 0.461,
+        longitudeDelta: 0.2105,
       });
   
       reCenterMap();
+      } catch (error) {
+        console.log('Error while fetching current location: ', error);
+      }
     };
+
     getPermission();
   }, []);
 
@@ -515,6 +528,7 @@ export default function App() {
         {filteredAnimals.map((animal) => (
           <Marker
             key={animal.id}
+            tracksViewChanges={false}
             coordinate={{
               latitude: animal.latitude,
               longitude: animal.longitude,

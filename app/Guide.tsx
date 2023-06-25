@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, Image, Dimensions } from 'react-native'
 import Swiper from 'react-native-swiper'
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 
 const { width } = Dimensions.get('window')
 
@@ -23,7 +24,7 @@ const styles = {
   },
   image: {
     width: '100%',
-    flex: 1, // Added this
+    flex: 1,
   },
   paginationStyle: {
     position: 'absolute',
@@ -49,32 +50,38 @@ const renderPagination = (index, total, context) => {
 export default class extends Component {
   render() {
     return (
+      
         <View style={styles.pageContainer}>
+            <Stack.Screen
+              options={{
+                title: "User Guide",
+              }}
+            />
             <Swiper
                 style={styles.wrapper}
                 renderPagination={renderPagination}
                 loop={false}
             >   
-                <View
-                style={styles.slide}
-                >
+                <View style={styles.slide}>
                 <Image style={styles.image} source={require('../assets/images/Guide1.png')} resizeMode="contain" />
                 </View>
-                <View
-                style={styles.slide}
-                >
+
+                <View style={styles.slide}>
                 <Image style={styles.image} source={require('../assets/images/Guide2.png')} resizeMode="contain" />
                 </View>
-                <View
-                style={styles.slide}
-                >
+
+                <View style={styles.slide}>
                 <Image style={styles.image} source={require('../assets/images/Guide3.png')} resizeMode="contain" />
                 </View>
-                <View
-                style={styles.slide}
-                >
+
+                <View style={styles.slide}>
                 <Image style={styles.image} source={require('../assets/images/Guide4.png')} resizeMode="contain" />
                 </View>
+
+                <View style={styles.slide}>
+                <Image style={styles.image} source={require('../assets/images/Guide5.png')} resizeMode="contain" />
+                </View>
+
             </Swiper>
 
         </View>

@@ -269,10 +269,12 @@ export default class App extends React.Component {
 	state = initialState;
 
 	resetState = () => {
+		const { latitude, longitude } = this.state;
+
 		this.setState({
 			...initialState,
-			latitude: this.state.latitude,
-			longitude: this.state.longitude
+			latitude,
+			longitude
 		});
 	};
 	  
